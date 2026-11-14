@@ -1,13 +1,178 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>space-mission</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Space Mission</title>
+  <style>
+  * {
+  box-sizing: border-box;
+}
+[hidden] {
+  display: none !important;
+}
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+#app {
+  height: 100%;
+}
+.pantalla {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+#pantalla-menu {
+  position: relative;
+  padding-bottom: 10vh; 
+}
+#titulo-juego {
+  margin: 0 0 60px;
+  text-align: center;
+}
+#menu-principal {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 220px;
+}
+#esquina-izquierda {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  display: flex;
+  gap: 8px;
+}
+#esquina-derecha {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+}
+.modal {
+  text-align: center;
+}
+.modal label {
+  display: block;
+  margin: 8px 0;
+}
+#lista-campanas {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: min(500px, 90vw);
+}
+.campana {
+  position: relative;
+}
+.campana-btn {
+  width: 100%;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 2px solid;
+}
+.btn-borrar {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+#game {
+  height: 80vh;
+  aspect-ratio: 4 / 3;
+}
+</style>
+</head>
+<body>
+  <main id="app">
+    <section id="pantalla-menu" class="pantalla">
+      <h1 id="titulo-juego">Space Mission</h1>
+      <nav id="menu-principal">
+        <button id="btn-nueva-campana" class="btn-menu">Nueva campaña</button>
+        <button id="btn-continuar" class="btn-menu">Continuar</button>
+        <button id="btn-opciones" class="btn-menu">Opciones</button>
+        <button id="btn-salir" class="btn-menu">Salir</button>
+      </nav>
+      <div id="esquina-izquierda">
+        <button id="btn-info" class="btn-icono" title="Información" aria-label="Información">?</button>
+        <button id="btn-creditos" class="btn-icono" title="Créditos" aria-label="Créditos">©</button>
+      </div>
+      <div id="esquina-derecha">Nasa Space Challenge</div>
+    </section>
+    <section id="pantalla-campanas" class="pantalla" hidden>
+      <h2 id="titulo-campanas">Nueva campaña</h2>
+      <div id="lista-campanas">
+        <div class="campana" data-slot="1">
+          <button class="campana-btn">
+            <strong>Campaña 1</strong>
+            <span class="campana-estado">Vacía</span>
+          </button>
+          <button class="btn-borrar" title="Borrar partida" aria-label="Borrar campaña 1">🗑</button>
+        </div>
+        <div class="campana" data-slot="2">
+          <button class="campana-btn">
+            <strong>Campaña 2</strong>
+            <span class="campana-estado">Vacía</span>
+          </button>
+          <button class="btn-borrar" title="Borrar partida" aria-label="Borrar campaña 2">🗑</button>
+        </div>
+        <div class="campana" data-slot="3">
+          <button class="campana-btn">
+            <strong>Campaña 3</strong>
+            <span class="campana-estado">Vacía</span>
+          </button>
+          <button class="btn-borrar" title="Borrar partida" aria-label="Borrar campaña 3">🗑</button>
+        </div>
+      </div>
+      <button id="btn-campanas-volver" class="btn-menu">Volver</button>
+    </section>
+    <section id="pantalla-juego" class="pantalla" hidden>
+      <canvas id="game" width="800" height="600"></canvas>
+      <button id="btn-volver-menu" class="btn-menu">Volver al menú</button>
+    </section>
+    <section id="pantalla-salida" class="pantalla" hidden>
+      <h2>¡Gracias por jugar!</h2>
+      <p>Ya podés cerrar esta pestaña.</p>
+      <button id="btn-volver-inicio" class="btn-menu">Volver al inicio</button>
+    </section>
+  </main>
+  <dialog id="modal-info" class="modal">
+    <h2>Información</h2>
+    <p>Acá va la historia / objetivo del juego.</p>
+    <p>Controles: flechas ← → para moverte.</p>
+    <button class="btn-menu" data-cerrar>Cerrar</button>
+  </dialog>
+  <dialog id="modal-creditos" class="modal">
+    <h2>Créditos</h2>
+    <p>Equipo: Syntax Error: Expected 'Team'</p>
+    <p>Nasa Space Challenge</p>
+    <button class="btn-menu" data-cerrar>Cerrar</button>
+  </dialog>
+  <dialog id="modal-opciones" class="modal">
+    <h2>Opciones</h2>
+    <label>
+      <input type="checkbox" id="opt-musica" />
+      Música
+    </label>
+    <label>
+      Volumen
+      <input type="range" id="opt-volumen" min="0" max="100" />
+      <span id="opt-volumen-valor"></span>
+    </label>
+    <button class="btn-menu" data-cerrar>Cerrar</button>
+  </dialog>
+  <dialog id="modal-salir" class="modal">
+    <h2>¿Querés salir?</h2>
+    <button id="btn-salir-si" class="btn-menu">Sí, salir</button>
+    <button class="btn-menu" data-cerrar>No, volver</button>
+  </dialog>
+  <script type="module" src="/src/main.js"></script>
+</body>
 </html>
