@@ -88,6 +88,49 @@ body {
   height: 80vh;
   aspect-ratio: 4 / 3;
 }
+#pantalla-base {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr; 
+}
+#base-izquierda,
+#base-derecha {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  min-height: 0;
+}
+#base-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 160px;
+}
+#base-derecha {
+  justify-content: space-between;
+}
+#base-recursos {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-end;
+}
+#base-mensaje {
+  min-height: 100px;
+  border: 2px solid;
+  padding: 8px;
+}
+#base-centro {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+}
+#canvas-base {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
 </style>
 </head>
 <body>
@@ -141,6 +184,33 @@ body {
       <h2>¡Gracias por jugar!</h2>
       <p>Ya podés cerrar esta pestaña.</p>
       <button id="btn-volver-inicio" class="btn-menu">Volver al inicio</button>
+    </section>
+    <section id="pantalla-base" hidden>
+      <div id="base-izquierda">
+        <nav id="base-menu">
+          <button id="base-btn-taller" class="btn-menu">Taller</button>
+          <button id="base-btn-arbol" class="btn-menu">Árbol</button>
+          <button id="base-btn-opciones" class="btn-menu">Opciones</button>
+          <button id="base-btn-volver" class="btn-menu">Volver</button>
+        </nav>
+      </div>
+      <div id="base-centro">
+        <canvas id="canvas-base"></canvas>
+      </div>
+      <div id="base-derecha">
+        <div id="base-recursos">
+          <div id="base-calendario">Día <span id="base-dia">1</span></div>
+          <div id="base-presupuesto">Presupuesto: $<span id="base-presupuesto-valor">0</span></div>
+          <div id="base-ciencia">Puntos de ciencia: <span id="base-ciencia-valor">0</span></div>
+        </div>
+        <div id="base-mision">
+          <h3 id="base-mision-titulo"></h3>
+          <p id="base-mision-descripcion"></p>
+          <p id="base-mision-estado"></p>
+          <button id="base-btn-mision" class="btn-menu">Iniciar misión</button>
+        </div>
+        <div id="base-mensaje"></div>
+      </div>
     </section>
   </main>
   <dialog id="modal-info" class="modal">

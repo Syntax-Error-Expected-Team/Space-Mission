@@ -31,18 +31,19 @@ CONEXIONES.forEach(([a, b]) => {
   vecinos[a].push(b);
   vecinos[b].push(a);
 });
-let canvas, ctx, alGuardar;
+let canvas, ctx, alGuardar, alEntrar;
 let rafId = null;
 let ultimoTiempo = 0;
 let estado; 
 let viaje = null; 
 let angulo = -Math.PI / 2;
 let mensaje = '';
-export function iniciarMapa(canvasEl, partida, guardarCb) {
-  detenerMapa(); 
+export function iniciarMapa(canvasEl, partida, guardarCb, entrarCb) {
+  detenerMapa();
   canvas = canvasEl;
   ctx = canvas.getContext('2d');
   alGuardar = guardarCb;
+  alEntrar = entrarCb;
   estado = {
     nodoActual: partida?.nodoActual ?? NODO_INICIAL,
     completados: partida?.completados ?? [],
@@ -90,17 +91,24 @@ function intentarMover([dx, dy]) {
     mensaje = '';
   }
 }
+export function completarMision(est, id) {
+  const completados = est.completados ?? [];
+  const desbloqueados = est.desbloqueados ?? [NODO_INICIAL];
+  if (!completados.includes(id)) completados.push(id);
+  vecinos[id].forEach((v) => {
+    if (!desbloqueados.includes(v)) desbloqueados.push(v);
+  });
+  return { ...est, completados, desbloqueados };
+}
 function entrarMision() {
   if (viaje) return;
   const nodo = nodoPorId[estado.nodoActual];
+  if (alEntrar && alEntrar(nodo)) return;
   if (estado.completados.includes(nodo.id)) {
     mensaje = `"${nodo.nombre}" ya está completada`;
     return;
   }
-  estado.completados.push(nodo.id);
-  vecinos[nodo.id].forEach((id) => {
-    if (!estado.desbloqueados.includes(id)) estado.desbloqueados.push(id);
-  });
+  estado = completarMision(estado, nodo.id);
   mensaje = `Misión "${nodo.nombre}" completada`;
   guardar();
 }

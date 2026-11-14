@@ -1,4 +1,5 @@
 import { iniciarMapa, detenerMapa } from './mapa.js';
+import { iniciarBase, detenerBase } from './base.js';
 const $ = (id) => document.getElementById(id);
 const TOTAL_SLOTS = 3;
 const CLAVE_OPCIONES = 'spaceMission:opciones';
@@ -7,6 +8,7 @@ const pantallas = {
   menu: $('pantalla-menu'),
   campanas: $('pantalla-campanas'),
   juego: $('pantalla-juego'),
+  base: $('pantalla-base'),
   salida: $('pantalla-salida'),
 };
 function mostrarPantalla(nombre) {
@@ -119,12 +121,40 @@ document.querySelectorAll('.campana').forEach((slotEl) => {
 $('btn-campanas-volver').addEventListener('click', () => mostrarPantalla('menu'));
 function iniciarJuego(slot, partida) {
   slotActual = slot;
+  detenerBase();
   mostrarPantalla('juego');
-  iniciarMapa($('game'), partida, (estado) => guardarPartida(slot, estado));
+  iniciarMapa(
+    $('game'),
+    partida,
+    (estado) => guardarPartida(slot, { ...cargarSlot(slot), ...estado }),
+    (nodo) => {
+      if (nodo.id === 'tierra') {
+        abrirBase(nodo);
+        return true;
+      }
+      return false;
+    }
+  );
 }
-
+function abrirBase(nodo) {
+  detenerMapa();
+  mostrarPantalla('base');
+  iniciarBase({
+    canvas: $('canvas-base'),
+    nodo,
+    partida: cargarSlot(slotActual) ?? {},
+    onGuardar: (cambios) =>
+      guardarPartida(slotActual, { ...cargarSlot(slotActual), ...cambios }),
+    onOpciones: () => {
+      pintarOpciones();
+      abrirModal('modal-opciones');
+    },
+    onVolver: () => iniciarJuego(slotActual, cargarSlot(slotActual)),
+  });
+}
 function detenerJuego() {
   detenerMapa();
+  detenerBase();
 }
 $('btn-nueva-campana').addEventListener('click', () => abrirCampanas('nueva'));
 $('btn-continuar').addEventListener('click', () => abrirCampanas('continuar'));
