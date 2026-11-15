@@ -1,6 +1,169 @@
 <p class="juego-etiqueta">INFRAESTRUCTURA</p>
-<h2>Taller</h2>
+<h2>Taller de ensamblaje</h2>
 <p class="juego-descripcion">
-  Prepara y mejora el equipamiento para futuras misiones.
+  Arrastra componentes a su posición y equipa herramientas para preparar el
+  vehículo de misión.
 </p>
-<div id="taller-contenido"></div>
+
+<div class="taller-layout">
+  <aside class="taller-panel taller-inventario" aria-label="Inventario del taller">
+    <section>
+      <h3>Componentes</h3>
+      <p>Instala cada pieza en su acople correspondiente.</p>
+      <div id="taller-partes" class="taller-lista"></div>
+    </section>
+    <section>
+      <h3>Herramientas</h3>
+      <p>Selecciona o arrastra herramientas a la carga.</p>
+      <div id="taller-herramientas" class="taller-lista"></div>
+    </section>
+  </aside>
+
+  <section class="taller-panel taller-montaje">
+    <div class="taller-montaje-cabecera">
+      <div>
+        <h3>Ensamblaje del vehículo</h3>
+        <p>Coloca cada componente en su posición.</p>
+      </div>
+      <span class="taller-indicador">MÓDULO DE MONTAJE</span>
+    </div>
+
+    <p id="taller-aviso" class="taller-aviso" role="status" aria-live="polite">
+      Selecciona un componente para instalarlo.
+    </p>
+
+    <div class="taller-area-cohete">
+      <div
+        id="taller-cohete"
+        class="taller-cohete"
+        role="group"
+        aria-label="Vehículo en ensamblaje"
+      >
+        <div class="taller-zona-contenedor">
+          <button type="button" class="taller-zona" data-zona-parte="punta" data-etiqueta="Punta" data-icono="change_history">
+            <span class="taller-zona-icono material-symbols-outlined">change_history</span>
+            <span>Punta</span>
+          </button>
+          <button type="button" class="taller-quitar-parte" data-quitar-parte="punta" hidden>
+            Desmontar
+          </button>
+        </div>
+        <span class="taller-acople">ACOPLE 01</span>
+        <div class="taller-zona-contenedor">
+          <button type="button" class="taller-zona" data-zona-parte="cabina" data-etiqueta="Cabina" data-icono="airline_seat_recline_extra">
+            <span class="taller-zona-icono material-symbols-outlined">airline_seat_recline_extra</span>
+            <span>Cabina</span>
+          </button>
+          <button type="button" class="taller-quitar-parte" data-quitar-parte="cabina" hidden>
+            Desmontar
+          </button>
+        </div>
+        <span class="taller-acople">ACOPLE 02</span>
+        <div class="taller-zona-contenedor">
+          <button type="button" class="taller-zona" data-zona-parte="tanque" data-etiqueta="Tanque" data-icono="propane_tank">
+            <span class="taller-zona-icono material-symbols-outlined">propane_tank</span>
+            <span>Tanque</span>
+          </button>
+          <button type="button" class="taller-quitar-parte" data-quitar-parte="tanque" hidden>
+            Desmontar
+          </button>
+        </div>
+        <span class="taller-acople">ACOPLE 03</span>
+        <div class="taller-zona-contenedor">
+          <button type="button" class="taller-zona" data-zona-parte="alas" data-etiqueta="Estabilizadores" data-icono="flight">
+            <span class="taller-zona-icono material-symbols-outlined">flight</span>
+            <span>Estabilizadores</span>
+          </button>
+          <button type="button" class="taller-quitar-parte" data-quitar-parte="alas" hidden>
+            Desmontar
+          </button>
+        </div>
+        <span class="taller-acople">ACOPLE 04</span>
+        <div class="taller-zona-contenedor">
+          <button type="button" class="taller-zona" data-zona-parte="motor" data-etiqueta="Motor" data-icono="rocket_launch">
+            <span class="taller-zona-icono material-symbols-outlined">rocket_launch</span>
+            <span>Motor</span>
+          </button>
+          <button type="button" class="taller-quitar-parte" data-quitar-parte="motor" hidden>
+            Desmontar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <section class="taller-carga">
+      <div>
+        <h3>Carga de misión</h3>
+        <p>Arrastra aquí las herramientas que llevará el vehículo.</p>
+      </div>
+      <div
+        id="taller-carga"
+        class="taller-carga-zona"
+        tabindex="0"
+        role="group"
+        aria-label="Carga de misión. Selecciona o arrastra aquí herramientas."
+      >
+        <span id="taller-carga-vacia">Sin herramientas cargadas.</span>
+        <div id="taller-carga-lista"></div>
+      </div>
+    </section>
+
+    <div class="taller-acciones">
+      <button id="taller-verificar" type="button">Verificar vehículo</button>
+      <button id="taller-desmontar" class="taller-boton-secundario" type="button">
+        Desmontar todo
+      </button>
+    </div>
+  </section>
+
+  <aside class="taller-panel taller-resumen" aria-label="Resumen del montaje">
+<section class="taller-resumen-tarjeta">
+  <h3>Estado de la misión</h3>
+
+  <div class="taller-dato">
+    <span>Presupuesto disponible</span>
+    <strong id="taller-presupuesto">$0</strong>
+  </div>
+
+  <div class="taller-dato">
+    <span>Costo de la nave</span>
+    <strong id="taller-total-cohete">$0</strong>
+  </div>
+
+  <div class="taller-dato">
+    <span>Masa de lanzamiento</span>
+    <strong id="taller-masa-cohete">0 kg</strong>
+  </div>
+
+</section>
+
+    <section class="taller-resumen-tarjeta">
+      <h3>Progreso del montaje</h3>
+      <div
+        class="taller-barra"
+        role="progressbar"
+        aria-label="Componentes instalados"
+        aria-valuemin="0"
+        aria-valuemax="5"
+        aria-valuenow="0"
+      >
+        <div id="taller-progreso"></div>
+      </div>
+      <p id="taller-progreso-texto">0 / 5 componentes instalados</p>
+    </section>
+
+    <section class="taller-resumen-tarjeta">
+      <h3>Registro de gastos</h3>
+      <ul id="taller-gastos" class="taller-gastos">
+        <li>Todavía no hay gastos.</li>
+      </ul>
+    </section>
+
+    <section class="taller-estado">
+      <h3>Estado de misión</h3>
+      <p id="taller-estado-mision" aria-live="polite">
+        Esperando el montaje de los componentes.
+      </p>
+    </section>
+  </aside>
+</div>

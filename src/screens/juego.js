@@ -45,7 +45,7 @@ export default function configurarJuego({
 
   const actualizarVistas = {
     misionTree: inicializarBase(),
-    taller: inicializarTaller(),
+    taller: inicializarTaller({ onResourcesChanged: actualizarHUD }),
     investigacion: inicializarInvestigacion({
       onResourcesChanged: actualizarHUD,
       categoriaInicial: categoriaInvestigacionInicial,
@@ -103,6 +103,7 @@ export default function configurarJuego({
     }
 
     actualizarHUD(partidaActualizada);
+    actualizarVistas.taller();
   };
 
   if (btnVolver && onVolver) {

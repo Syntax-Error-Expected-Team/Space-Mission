@@ -793,13 +793,398 @@ body {
     }
   }
 
-  .taller-estado-vacio {
-    max-width: 560px;
-    color: #cbd5e1;
+  .taller-layout {
+    display: grid;
+    grid-template-columns: minmax(220px, 0.8fr) minmax(0, 1.5fr) minmax(
+        220px,
+        0.8fr
+      );
+    align-items: start;
+    gap: 16px;
+  }
+
+  .taller-panel {
+    min-width: 0;
+    padding: 18px;
+    border: 1px solid rgba(75, 85, 99, 0.55);
+    border-radius: 10px;
+    background: rgba(17, 24, 39, 0.78);
+
+    h3 {
+      margin: 0;
+      color: #f9fafb;
+      font-size: 1rem;
+    }
 
     p {
-      margin: 0;
-      line-height: 1.5;
+      margin: 7px 0 0;
+      color: #9ca3af;
+      font-size: 0.82rem;
+      line-height: 1.45;
+    }
+  }
+
+  .taller-inventario,
+  .taller-resumen {
+    display: grid;
+    gap: 18px;
+  }
+
+  .taller-lista {
+    display: grid;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .taller-pieza {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    min-width: 0;
+    padding: 10px;
+    border: 1px solid rgba(75, 85, 99, 0.65);
+    border-radius: 8px;
+    background: rgba(3, 7, 18, 0.5);
+    color: #e5e7eb;
+    font: inherit;
+    text-align: left;
+    cursor: grab;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+
+    &:hover,
+    &.taller-pieza-seleccionada {
+      border-color: #60a5fa;
+      background: rgba(37, 99, 235, 0.16);
+    }
+
+    &:focus-visible {
+      outline: 2px solid #93c5fd;
+      outline-offset: 2px;
+    }
+
+    &:disabled {
+      cursor: default;
+      opacity: 0.5;
+    }
+
+    .taller-pieza-icono {
+      flex: 0 0 30px;
+      font-size: 1.35rem;
+      text-align: center;
+    }
+
+    .taller-pieza-detalles {
+      display: grid;
+      min-width: 0;
+      gap: 4px;
+    }
+
+    strong {
+      font-size: 0.82rem;
+      line-height: 1.25;
+    }
+
+    small {
+      color: #9ca3af;
+      font-size: 0.72rem;
+    }
+  }
+
+  .taller-montaje {
+    display: grid;
+    gap: 16px;
+  }
+
+  .taller-montaje-cabecera {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+
+    p {
+      margin-top: 6px;
+    }
+  }
+
+  .taller-indicador {
+    padding: 6px 8px;
+    border: 1px solid rgba(96, 165, 250, 0.35);
+    border-radius: 5px;
+    color: #93c5fd;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+
+  .taller-aviso {
+    margin: 0 !important;
+    padding: 10px 12px;
+    border-left: 3px solid #3b82f6;
+    border-radius: 4px;
+    background: rgba(37, 99, 235, 0.12);
+    color: #dbeafe !important;
+  }
+
+  .taller-area-cohete {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 640px;
+    padding: 18px 12px;
+    border: 1px solid rgba(75, 85, 99, 0.4);
+    border-radius: 9px;
+    background-color: #0b1c2a;
+    background-image:
+      linear-gradient(rgba(3, 7, 18, 0.34), rgba(3, 7, 18, 0.34)),
+      url("./assets/rocket-blueprint.png");
+    background-position: center, center;
+    background-repeat: no-repeat;
+    background-size: cover, auto 100%;
+  }
+
+  .taller-cohete {
+    display: grid;
+    width: min(100%, 250px);
+    gap: 6px;
+  }
+
+  .taller-zona-contenedor {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .taller-zona {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 54px;
+    padding: 10px;
+    border: 1px dashed rgba(148, 163, 184, 0.65);
+    border-radius: 7px;
+    background: rgba(17, 24, 39, 0.76);
+    color: #cbd5e1;
+    font: inherit;
+    font-size: 0.85rem;
+    cursor: pointer;
+
+    &:hover,
+    &.taller-zona-hover {
+      border-color: #60a5fa;
+      background: rgba(37, 99, 235, 0.2);
+    }
+
+    &.taller-zona-instalada {
+      border-style: solid;
+      border-color: #34d399;
+      background: rgba(6, 78, 59, 0.45);
+      color: #d1fae5;
+    }
+
+    &:focus-visible {
+      outline: 2px solid #93c5fd;
+      outline-offset: 2px;
+    }
+
+    .taller-zona-icono {
+      color: #93c5fd;
+      font-size: 21px;
+    }
+  }
+
+  .taller-quitar-parte,
+  .taller-herramienta-cargada button {
+    border: 1px solid rgba(248, 113, 113, 0.5);
+    border-radius: 6px;
+    background: rgba(127, 29, 29, 0.25);
+    color: #fecaca;
+    font: inherit;
+    cursor: pointer;
+
+    &:hover {
+      background: rgba(127, 29, 29, 0.55);
+    }
+  }
+
+  .taller-quitar-parte {
+    padding: 0 9px;
+    font-size: 0.72rem;
+  }
+
+  .taller-acople {
+    color: #64748b;
+    font-size: 0.6rem;
+    letter-spacing: 0.14em;
+    text-align: center;
+  }
+
+  .taller-carga {
+    display: grid;
+    gap: 10px;
+  }
+
+  .taller-carga-zona {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    min-height: 54px;
+    padding: 10px;
+    border: 1px dashed rgba(148, 163, 184, 0.6);
+    border-radius: 7px;
+    color: #9ca3af;
+    font-size: 0.82rem;
+
+    &:focus-visible,
+    &.taller-carga-hover {
+      outline: 2px solid #60a5fa;
+      outline-offset: 2px;
+      border-color: #60a5fa;
+    }
+  }
+
+  .taller-herramienta-cargada {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 6px 5px 9px;
+    border: 1px solid rgba(96, 165, 250, 0.4);
+    border-radius: 6px;
+    background: rgba(37, 99, 235, 0.16);
+    color: #dbeafe;
+
+    .taller-herramienta-cargada-etiqueta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .material-symbols-outlined {
+      font-size: 18px;
+    }
+
+    button {
+      width: 24px;
+      height: 24px;
+      padding: 0;
+      font-size: 1rem;
+      line-height: 1;
+    }
+  }
+
+  #taller-carga-lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .taller-acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    button {
+      min-height: 42px;
+      padding: 9px 14px;
+      border: 1px solid #3b82f6;
+      border-radius: 7px;
+      background: #2563eb;
+      color: #ffffff;
+      font: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+
+      &:hover {
+        background: #1d4ed8;
+      }
+
+      &:focus-visible {
+        outline: 2px solid #93c5fd;
+        outline-offset: 2px;
+      }
+    }
+
+    .taller-boton-secundario {
+      border-color: rgba(248, 113, 113, 0.45);
+      background: rgba(127, 29, 29, 0.25);
+      color: #fecaca;
+
+      &:hover {
+        background: rgba(127, 29, 29, 0.55);
+      }
+    }
+  }
+
+  .taller-resumen-tarjeta {
+    display: grid;
+    gap: 12px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(75, 85, 99, 0.4);
+  }
+
+  .taller-dato {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    color: #9ca3af;
+    font-size: 0.8rem;
+
+    strong {
+      color: #f9fafb;
+      white-space: nowrap;
+    }
+  }
+
+  .taller-barra {
+    height: 8px;
+    overflow: hidden;
+    border-radius: 10px;
+    background: rgba(75, 85, 99, 0.55);
+
+    > div {
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #2563eb, #34d399);
+      transition: width 0.25s ease;
+    }
+  }
+
+  .taller-resumen-tarjeta > p {
+    margin: -4px 0 0;
+    font-size: 0.78rem;
+  }
+
+  .taller-gastos {
+    display: grid;
+    gap: 8px;
+    max-height: 180px;
+    overflow-y: auto;
+    margin: 0;
+    padding: 0;
+    color: #cbd5e1;
+    font-size: 0.78rem;
+    list-style: none;
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+    }
+  }
+
+  .taller-estado {
+    padding: 12px;
+    border: 1px solid rgba(52, 211, 153, 0.3);
+    border-radius: 8px;
+    background: rgba(6, 78, 59, 0.18);
+
+    p {
+      color: #d1fae5;
     }
   }
 
@@ -909,7 +1294,9 @@ body {
     }
 
     &.investigacion-insuficiente {
-      border-color: #f59e0b;
+      border-color: #f5550b69;
+      opacity: 0.75;
+      cursor: default;
       color: #fde68a;
     }
 
@@ -1161,6 +1548,48 @@ body {
     .juego-turno button {
       width: auto;
     }
+  }
+}
+
+@media (max-width: 1150px) {
+  .juego-container .taller-layout {
+    grid-template-columns: minmax(0, 1.2fr) minmax(220px, 0.8fr);
+  }
+
+  .juego-container .taller-inventario {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .juego-container .taller-montaje {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .juego-container .taller-resumen {
+    grid-column: 2;
+    grid-row: 1 / 3;
+  }
+}
+
+@media (max-width: 760px) {
+  .juego-container .taller-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .juego-container .taller-inventario,
+  .juego-container .taller-montaje,
+  .juego-container .taller-resumen {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .juego-container .taller-montaje-cabecera {
+    flex-direction: column;
+  }
+
+  .juego-container .taller-zona {
+    justify-content: flex-start;
   }
 }
 

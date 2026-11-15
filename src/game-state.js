@@ -77,6 +77,7 @@ export class GameStateManager {
       ciencia: 0,
       investigacionesCompletadas: [INVESTIGACION_INICIAL],
       misionActual: MISION_INICIAL,
+      taller: { partesInstaladas: [], herramientasCargadas: [] },
       nodoActual: "tierra",
       completados: [],
       desbloqueados: ["tierra"],
