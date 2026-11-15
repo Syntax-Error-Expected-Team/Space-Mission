@@ -2,8 +2,12 @@ import gameState, { INGRESO_MENSUAL } from "../game-state.js";
 import inicializarBase from "./juego/base.js";
 import inicializarTaller from "./juego/taller.js";
 import inicializarInvestigacion from "./juego/investigacion.js";
+import { guardarVistaJuego } from "../navigation-state.js";
 
-export default function configurarJuego() {
+export default function configurarJuego({
+  vistaInicial = "base",
+  onVolver,
+} = {}) {
   const paneles = document.querySelectorAll("[data-juego-panel]");
   const botonesVista = document.querySelectorAll("[data-juego-vista]");
   const presupuesto = document.getElementById("juego-presupuesto");
@@ -15,6 +19,7 @@ export default function configurarJuego() {
   const turno = document.getElementById("juego-turno");
   const btnPasarTurno = document.getElementById("btn-pasar-turno");
   const btnToggleSidebar = document.getElementById("btn-toggle-sidebar");
+  const btnVolver = document.getElementById("btn-misiones-volver");
 
   function actualizarHUD(partida = gameState.obtenerSlotActual()) {
     if (!partida) {
@@ -46,6 +51,10 @@ export default function configurarJuego() {
   };
 
   function mostrarVista(vista) {
+    if (!actualizarVistas[vista]) {
+      throw new Error(`La vista de juego "${vista}" no existe.`);
+    }
+
     paneles.forEach((panel) => {
       panel.hidden = panel.dataset.juegoPanel !== vista;
     });
@@ -59,6 +68,7 @@ export default function configurarJuego() {
     });
 
     actualizarVistas[vista]?.();
+    guardarVistaJuego(vista);
   }
 
   botonesVista.forEach((boton) => {
@@ -93,6 +103,10 @@ export default function configurarJuego() {
     actualizarHUD(partidaActualizada);
   };
 
-  mostrarVista("base");
+  if (btnVolver && onVolver) {
+    btnVolver.onclick = onVolver;
+  }
+
+  mostrarVista(vistaInicial);
   actualizarHUD();
 }

@@ -127,25 +127,25 @@ body {
   }
 }
 
-.btn-icono {
-  width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(17, 24, 39, 0.8);
-  border: 1px solid rgba(75, 85, 99, 0.4);
-  color: #ffffff;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  backdrop-filter: blur(5px);
-  &:hover {
-    background-color: #374151;
-    border-color: #9ca3af;
-    transform: scale(1.1);
-  }
-}
+    .btn-icono {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(17, 24, 39, 0.8);
+      border: 1px solid rgba(75, 85, 99, 0.4);
+      color: #ffffff;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      backdrop-filter: blur(5px);
+      &:hover {
+        background-color: #374151;
+        border-color: #9ca3af;
+        transform: scale(1.1);
+      }
+    }
 
 /* Contenedor principal de slots */
 .slots-container {
@@ -700,9 +700,7 @@ body {
     font: inherit;
     text-align: center;
     cursor: pointer;
-    transition:
-      border-color 0.2s ease,
-      background-color 0.2s ease;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
 
     &:focus-visible {
       outline: 2px solid #93c5fd;
@@ -771,30 +769,6 @@ body {
     .btn-sidebar {
       bottom: 2%;
       position: absolute;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 12px 20px;
-      background-color: rgba(17, 24, 39, 0.8);
-      border: 1px solid rgba(75, 85, 99, 0.4);
-      color: #ffffff;
-      font-size: 1.05rem;
-      font-weight: 600;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.2s ease-in-out;
-      backdrop-filter: blur(5px);
-
-      &:hover {
-        background-color: #374151;
-        border-color: #9ca3af;
-        transform: translateY(-2px);
-      }
-
-      &:active {
-        transform: translateY(0);
-      }
     }
 
     .btn-toggle-sidebar {

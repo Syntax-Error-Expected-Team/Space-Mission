@@ -14,6 +14,10 @@ import inicializarMision from "./screens/mision.js";
 import abrirDialogoDinamico from "./screens/dialog.js";
 import configurarJuego from "./screens/juego.js";
 import gameState from "./game-state.js";
+import {
+  guardarPantallaActual,
+  obtenerNavegacionGuardada,
+} from "./navigation-state.js";
 
 document.getElementById("pantalla-menu").innerHTML = menuHtml;
 document.getElementById("pantalla-slots").innerHTML = slotsHtml;
@@ -25,6 +29,7 @@ function mostrarPantalla(idPantalla) {
   pantallas.forEach((p) => {
     p.hidden = p.id !== idPantalla;
   });
+  guardarPantallaActual(idPantalla);
 }
 
 inicializarMenu({
@@ -124,10 +129,50 @@ function configurarMision() {
     onIniciarMision: (idNodo) => {
       console.log(`Iniciando misión en el nodo: ${idNodo}`);
       mostrarPantalla("pantalla-juego");
-      configurarJuego();
+      configurarJuego({
+        onVolver: () => {
+          mostrarPantalla("pantalla-mision");
+          configurarMision();
+        },
+      });
     },
     onVolver: () => {
       mostrarPantalla("pantalla-menu");
     },
   });
 }
+
+function restaurarNavegacion() {
+  const navegacion = obtenerNavegacionGuardada();
+  if (!navegacion) {
+    mostrarPantalla("pantalla-menu");
+    return;
+  }
+
+  if (
+    (navegacion.pantalla === "pantalla-mision" ||
+      navegacion.pantalla === "pantalla-juego") &&
+    !gameState.obtenerSlotActual()
+  ) {
+    mostrarPantalla("pantalla-menu");
+    return;
+  }
+
+  mostrarPantalla(navegacion.pantalla);
+
+  if (navegacion.pantalla === "pantalla-slots") {
+    configurarSlots();
+  } else if (navegacion.pantalla === "pantalla-mision") {
+    configurarMision();
+  } else if (navegacion.pantalla === "pantalla-juego") {
+    configurarJuego({
+      vistaInicial: navegacion.vista,
+      onVolver: () => {
+        mostrarPantalla("pantalla-mision");
+        configurarMision();
+      },
+    });
+  }
+}
+
+restaurarNavegacion();
