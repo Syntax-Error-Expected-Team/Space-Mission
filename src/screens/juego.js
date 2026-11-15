@@ -3,7 +3,46 @@ import inicializarBase from "./juego/misionTree.js";
 import inicializarTaller from "./juego/taller.js";
 import inicializarInvestigacion from "./juego/investigacion.js";
 import { guardarVistaJuego } from "../navigation-state.js";
+import { tutorialCuandoSeVea } from "../robot.js";
+const visible = (e) => (e && e.getBoundingClientRect().width > 0 ? e : null);
 
+function lanzarTutorialCentro() {
+  const panel = document.querySelector('[data-juego-panel="misionTree"]');
+  if (!panel) return;
+
+  tutorialCuandoSeVea("centro-intro", panel, {
+    pasos: [
+      { texto: "¡Este es el Centro de mando! Desde acá manejás todo.", expresion: "saludo" },
+      {
+        texto: "Acá ves tu plata y tus puntos de investigación. Cada misión te cuesta recursos.",
+        resaltar: () => visible(document.getElementById("juego-presupuesto")?.closest(".juego-hud, header")),
+      },
+      {
+        texto: "En Misiones elegís qué hacer. Es donde estás ahora.",
+        resaltar: () => visible(document.querySelector('[data-juego-vista="misionTree"]')),
+      },
+      {
+        texto: "En el Taller mejorás tus naves.",
+        resaltar: () => visible(document.querySelector('[data-juego-vista="taller"]')),
+      },
+      {
+        texto: "En Desarrollo investigás cosas nuevas con tus puntos de ciencia.",
+        resaltar: () => visible(document.querySelector('[data-juego-vista="investigacion"]')),
+      },
+      {
+        texto: `Cuando tocás "Pasar Mes", cobrás $${INGRESO_MENSUAL.presupuesto} y ${INGRESO_MENSUAL.ciencia} de ciencia.`,
+        expresion: "pensando",
+        resaltar: () => visible(document.getElementById("btn-pasar-turno")),
+      },
+      "Las tarjetas de arriba y abajo son misiones extra. ¡Te ayudan con las principales!",
+      "¡A empezar! Tocá la misión del satélite.",
+    ],
+    objetivo: () =>
+      [...panel.querySelectorAll("button, article, li, [role='button']")].find(
+        (e) => visible(e) && e.textContent.includes("Lanzamiento de un satélite"),
+      ) ?? null,
+  });
+}
 export default function configurarJuego({
   vistaInicial = "misionTree",
   categoriaInvestigacionInicial = "propulsion",
@@ -71,6 +110,7 @@ export default function configurarJuego({
 
     actualizarVistas[vista]?.();
     guardarVistaJuego(vista);
+    if (vista === "misionTree") lanzarTutorialCentro();
   }
 
   botonesVista.forEach((boton) => {

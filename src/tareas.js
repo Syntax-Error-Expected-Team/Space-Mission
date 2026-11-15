@@ -1,4 +1,5 @@
 import gameState from "./game-state.js";
+import { jugarMinijuego } from "./minijuego.js"
 
 export const TAREAS = {
   lanzamiento_satelite: [
@@ -68,46 +69,64 @@ export const TAREAS = {
   ],
 };
 
-const MODO_PRUEBA = true;
-const PASO_PRUEBA = 25;
+const GASTAR_RECURSOS_REALES = true;
 
-let anterior = {};
+const REINICIAR_PROGRESO_AL_FALLAR = false;
 
-function progresoDe(partida, misionId, indice) {
-  return partida.tareas?.[misionId]?.[indice] ?? 0;
+function estaCompleta(partida, misionId, indice) {
+  const valor = partida.tareas?.[misionId]?.[indice];
+  return valor === true || valor >= 100;
 }
 
 export function resumenTareas(misionId, partida) {
   const lista = TAREAS[misionId] ?? [];
-  const hechas = lista.filter(
-    (_, i) => progresoDe(partida, misionId, i) >= 100,
-  ).length;
-  return { hechas, total: lista.length };
+  const hechas = lista.filter((_, i) => estaCompleta(partida, misionId, i)).length;
+  const porcentaje = lista.length ? Math.round((hechas / lista.length) * 100) : 0;
+  return { hechas, total: lista.length, porcentaje };
 }
 
-export function sumarProgreso(misionId, indice, cantidad) {
+function aplicarResultado(misionId, indice, resultado) {
   const partida = gameState.obtenerSlotActual();
   if (!partida) return null;
 
-  const tareas = { ...(partida.tareas ?? {}) };
-  const deLaMision = { ...(tareas[misionId] ?? {}) };
-  deLaMision[indice] = Math.min(100, (deLaMision[indice] ?? 0) + cantidad);
-  tareas[misionId] = deLaMision;
-
-  const cambios = { tareas };
-  const completados = partida.completados ?? [];
-  const { hechas, total } = resumenTareas(misionId, { tareas });
-  let misionCompletada = false;
-
-  if (total > 0 && hechas === total && !completados.includes(misionId)) {
-    cambios.completados = [...completados, misionId];
-    misionCompletada = true;
+  const cambios = {};
+  if (GASTAR_RECURSOS_REALES) {
+    cambios.presupuesto = resultado.presupuesto;
+    cambios.ciencia = resultado.ciencia;
   }
 
-  return {
-    partida: gameState.actualizarSlotActual(cambios),
-    misionCompletada,
-  };
+  const tareas = { ...(partida.tareas ?? {}) };
+  let misionCompletada = false;
+
+  if (resultado.gano) {
+    tareas[misionId] = { ...(tareas[misionId] ?? {}), [indice]: true };
+    cambios.tareas = tareas;
+
+    const { hechas, total } = resumenTareas(misionId, { tareas });
+    const completados = partida.completados ?? [];
+    if (total > 0 && hechas === total && !completados.includes(misionId)) {
+      cambios.completados = [...completados, misionId];
+      misionCompletada = true;
+    }
+  } else if (REINICIAR_PROGRESO_AL_FALLAR) {
+    tareas[misionId] = {};
+    cambios.tareas = tareas;
+  }
+
+  return { partida: gameState.actualizarSlotActual(cambios), misionCompletada };
+}
+
+function el(tag, clase, texto) {
+  const nodo = document.createElement(tag);
+  if (clase) nodo.className = clase;
+  if (texto !== undefined) nodo.textContent = texto;
+  return nodo;
+}
+
+function icono(nombre) {
+  const nodo = el("span", "material-symbols-outlined", nombre);
+  nodo.setAttribute("aria-hidden", "true");
+  return nodo;
 }
 
 function obtenerDialogo() {
@@ -124,6 +143,10 @@ function obtenerDialogo() {
       </button>
     </header>
     <p class="tareas-descripcion"></p>
+    <div class="tareas-progreso">
+      <div class="tareas-progreso-texto"></div>
+      <div class="tareas-segmentos"></div>
+    </div>
     <ul class="tareas-lista"></ul>
     <footer class="tareas-pie"></footer>
   `;
@@ -136,97 +159,94 @@ export function abrirTareas({ misionId, titulo, descripcion, onCambio }) {
   if (!partida) return;
 
   const dialogo = obtenerDialogo();
-  anterior = {};
-
   dialogo.querySelector(".tareas-titulo").textContent = titulo;
   dialogo.querySelector(".tareas-descripcion").textContent = descripcion;
   dialogo.querySelector(".tareas-cerrar").onclick = () => dialogo.close();
+  // Click en el fondo oscuro también cierra
   dialogo.onclick = (e) => {
     if (e.target === dialogo) dialogo.close();
   };
 
-  const pintar = () =>
-    pintarLista(dialogo, misionId, partida, (indice) => {
-      const resultado = sumarProgreso(misionId, indice, PASO_PRUEBA);
-      if (!resultado) return;
-      partida = resultado.partida;
-      onCambio?.(resultado.misionCompletada);
-      pintar();
+  const pintar = () => pintarContenido(dialogo, misionId, partida, jugarTarea);
+
+  async function jugarTarea(indice) {
+    const actual = gameState.obtenerSlotActual() ?? partida;
+    const resultado = await jugarMinijuego({
+      titulo: TAREAS[misionId][indice],
+      presupuesto: actual.presupuesto ?? 0,
+      ciencia: actual.ciencia ?? 0,
     });
+
+    const aplicado = aplicarResultado(misionId, indice, resultado);
+    if (aplicado) {
+      partida = aplicado.partida;
+   
+      onCambio?.(aplicado.misionCompletada, !resultado.gano);
+    }
+    pintar();
+  }
 
   pintar();
   dialogo.showModal();
 }
 
-function el(tag, clase, texto) {
-  const nodo = document.createElement(tag);
-  if (clase) nodo.className = clase;
-  if (texto !== undefined) nodo.textContent = texto;
-  return nodo;
-}
+function pintarContenido(dialogo, misionId, partida, alElegir) {
+  const tareas = TAREAS[misionId] ?? [];
+  const { hechas, total, porcentaje } = resumenTareas(misionId, partida);
+  const todas = total > 0 && hechas === total;
 
-function icono(nombre) {
-  const nodo = el("span", "material-symbols-outlined", nombre);
-  nodo.setAttribute("aria-hidden", "true");
-  return nodo;
-}
+  dialogo.querySelector(".tareas-progreso-texto").textContent =
+    `Progreso de la misión: ${hechas}/${total} tareas (${porcentaje}%)`;
+  dialogo.querySelector(".tareas-segmentos").replaceChildren(
+    ...tareas.map((_, i) =>
+      el(
+        "span",
+        estaCompleta(partida, misionId, i)
+          ? "tareas-segmento llena"
+          : "tareas-segmento",
+      ),
+    ),
+  );
 
-function pintarLista(dialogo, misionId, partida, alProbar) {
   const lista = dialogo.querySelector(".tareas-lista");
   lista.replaceChildren();
 
-  const tareas = TAREAS[misionId] ?? [];
   if (tareas.length === 0) {
-    lista.append(el("li", "tarea", "Esta misión todavía no tiene tareas."));
+    lista.append(el("li", "tarea-vacia", "Esta misión todavía no tiene tareas."));
   }
 
   tareas.forEach((nombre, indice) => {
-    const progreso = progresoDe(partida, misionId, indice);
-    const completa = progreso >= 100;
+    const completa = estaCompleta(partida, misionId, indice);
 
-    const item = el("li", completa ? "tarea completada" : "tarea");
+    const boton = el("button", completa ? "tarea completada" : "tarea");
+    boton.type = "button";
+    boton.disabled = completa;
 
     const estado = el("span", "tarea-estado");
     if (completa) {
-      estado.append(icono("check_circle"), "Completada");
+      estado.append("Completada");
     } else {
-      estado.append(progreso > 0 ? "En progreso" : "Pendiente");
+      estado.append(icono("play_arrow"), "Iniciar");
     }
-    const fila1 = el("div", "tarea-fila");
-    fila1.append(el("span", "tarea-nombre", nombre), estado);
 
-    const barra = el("div", "tarea-barra");
-    const relleno = el("div", "tarea-barra-relleno");
-    relleno.style.width = `${anterior[indice] ?? 0}%`;
-    barra.append(relleno);
-    requestAnimationFrame(() =>
-      requestAnimationFrame(() => {
-        relleno.style.width = `${progreso}%`;
-      }),
+    boton.append(
+      icono(completa ? "check_circle" : "radio_button_unchecked"),
+      el("span", "tarea-nombre", nombre),
+      estado,
     );
-    anterior[indice] = progreso;
+    boton.onclick = () => alElegir(indice);
 
-    const fila2 = el("div", "tarea-fila");
-    fila2.append(el("span", "tarea-porcentaje", `${progreso}%`));
-    if (MODO_PRUEBA && !completa) {
-      const boton = el("button", "tarea-probar", `+${PASO_PRUEBA}% (prueba)`);
-      boton.type = "button";
-      boton.onclick = () => alProbar(indice);
-      fila2.append(boton);
-    }
-
-    item.append(fila1, barra, fila2);
+    const item = el("li");
+    item.append(boton);
     lista.append(item);
   });
 
-  const { hechas, total } = resumenTareas(misionId, partida);
-  const todas = total > 0 && hechas === total;
   const pie = dialogo.querySelector(".tareas-pie");
   pie.replaceChildren();
   if (todas) {
-    pie.append(icono("task_alt"), "Todas las tareas completadas");
+    pie.append(icono("task_alt"), "Misión completada");
   } else {
-    pie.append(`Tareas completadas: ${hechas}/${total}`);
+    pie.append("Hacé click en una tarea para jugar su minijuego");
   }
   pie.classList.toggle("completa", todas);
 }
