@@ -1,11 +1,12 @@
 import gameState from "../../game-state.js";
 import { guardarCategoriaInvestigacion } from "../../navigation-state.js";
 
-const ARBOLES_INVESTIGACION = {
+export const ARBOLES_INVESTIGACION = {
   propulsion: {
     nodos: [
       {
         id: "fundamentos_cientificos",
+        componenteId: "motor_solido",
         label: "Fundamentos de propulsión",
         position: { x: 16, y: 50 },
         icon: "science",
@@ -14,6 +15,7 @@ const ARBOLES_INVESTIGACION = {
       },
       {
         id: "motores_liq",
+        componenteId: "motor_liquido",
         label: "Motores de combustion liquida",
         position: { x: 40, y: 50 },
         icon: "rocket",
@@ -21,6 +23,7 @@ const ARBOLES_INVESTIGACION = {
       },
       {
         id: "propulsion_electrica",
+        componenteId: "motor_electrico",
         label: "Propulsión eléctrica",
         position: { x: 65, y: 25 },
         icon: "electric_bolt",
@@ -28,6 +31,7 @@ const ARBOLES_INVESTIGACION = {
       },
       {
         id: "propulsion_nuclear",
+        componenteId: "motor_nuclear",
         label: "Propulsión nuclear",
         position: { x: 65, y: 75 },
         icon: "flare",
@@ -35,6 +39,7 @@ const ARBOLES_INVESTIGACION = {
       },
       {
         id: "motor_fusion",
+        componenteId: "motor_fusion",
         label: "Motor de fusión",
         position: { x: 88, y: 50 },
         icon: "rocket_launch",
@@ -53,6 +58,7 @@ const ARBOLES_INVESTIGACION = {
     nodos: [
       {
         id: "combustible_fundamentos",
+        componenteId: "tanque_estandar",
         label: "Fundamentos de combustible",
         position: { x: 16, y: 50 },
         icon: "science",
@@ -61,6 +67,7 @@ const ARBOLES_INVESTIGACION = {
       },
       {
         id: "oxigeno_liquido",
+        componenteId: "tanque_oxigeno_liquido",
         label: "Tanque de Oxigeno Líquido",
         position: { x: 40, y: 50 },
         icon: "spo2",
@@ -68,6 +75,7 @@ const ARBOLES_INVESTIGACION = {
       },
       {
         id: "tanques_criogenicos",
+        componenteId: "tanque_criogenico",
         label: "Tanques criogénicos",
         position: { x: 65, y: 25 },
         icon: "propane_tank",
@@ -75,6 +83,7 @@ const ARBOLES_INVESTIGACION = {
       },
       {
         id: "almacenamiento_solido",
+        componenteId: "tanque_solido",
         label: "Almacenamiento sólido",
         position: { x: 65, y: 75 },
         icon: "battery_full",
@@ -82,6 +91,7 @@ const ARBOLES_INVESTIGACION = {
       },
       {
         id: "reciclaje_combustible",
+        componenteId: "tanque_reciclaje",
         label: "Reciclaje de combustible",
         position: { x: 88, y: 50 },
         icon: "recycling",
@@ -100,6 +110,7 @@ const ARBOLES_INVESTIGACION = {
     nodos: [
       {
         id: "control_fundamentos",
+        componenteId: "cabina_automatica",
         label: "Fundamentos de control",
         position: { x: 16, y: 50 },
         icon: "science",
@@ -108,6 +119,7 @@ const ARBOLES_INVESTIGACION = {
       },
       {
         id: "sistema_telemetria",
+        componenteId: "cabina_tripulada",
         label: "Sistema de Telemetría",
         position: { x: 40, y: 50 },
         icon: "memory",
@@ -115,6 +127,7 @@ const ARBOLES_INVESTIGACION = {
       },
       {
         id: "navegacion_autonoma",
+        componenteId: "modulo_acoplamiento",
         label: "Navegación autónoma",
         position: { x: 65, y: 25 },
         icon: "explore",
@@ -122,6 +135,7 @@ const ARBOLES_INVESTIGACION = {
       },
       {
         id: "control_termico",
+        componenteId: "cabina_termica",
         label: "Control térmico",
         position: { x: 65, y: 75 },
         icon: "device_thermostat",
@@ -129,6 +143,7 @@ const ARBOLES_INVESTIGACION = {
       },
       {
         id: "autonomia_mision",
+        componenteId: "cabina_autonoma",
         label: "Autonomía de misión",
         position: { x: 88, y: 50 },
         icon: "smart_toy",
@@ -147,6 +162,7 @@ const ARBOLES_INVESTIGACION = {
     nodos: [
       {
         id: "carga_util_fundamentos",
+        componenteId: "carga_satelite",
         label: "Fundamentos de carga útil",
         position: { x: 16, y: 50 },
         icon: "science",
@@ -155,6 +171,7 @@ const ARBOLES_INVESTIGACION = {
       },
       {
         id: "satelites_comunicacion",
+        componenteId: "carga_comunicaciones",
         label: "Satélites de comunicación",
         position: { x: 40, y: 25 },
         icon: "satellite_alt",
@@ -162,6 +179,7 @@ const ARBOLES_INVESTIGACION = {
       },
       {
         id: "telescopios_espaciales",
+        componenteId: "carga_cartografia",
         label: "Telescopios espaciales",
         position: { x: 40, y: 75 },
         icon: "travel_explore",
@@ -169,6 +187,7 @@ const ARBOLES_INVESTIGACION = {
       },
       {
         id: "rovers_exploracion",
+        componenteId: "carga_rover",
         label: "Rovers de exploración",
         position: { x: 65, y: 25 },
         icon: "precision_manufacturing",
@@ -176,6 +195,7 @@ const ARBOLES_INVESTIGACION = {
       },
       {
         id: "instrumentos_roboticos",
+        componenteId: "carga_sonda_lunar",
         label: "Instrumentos robóticos",
         position: { x: 65, y: 75 },
         icon: "settings_input_component",
@@ -183,6 +203,7 @@ const ARBOLES_INVESTIGACION = {
       },
       {
         id: "plataforma_cientifica",
+        componenteId: "modulo_laboratorio",
         label: "Plataforma científica integrada",
         position: { x: 88, y: 50 },
         icon: "science",
@@ -202,6 +223,7 @@ const ARBOLES_INVESTIGACION = {
     nodos: [
       {
         id: "estructura_fundamentos",
+        componenteId: "alas_basicas",
         label: "Fundamentos estructurales",
         position: { x: 16, y: 50 },
         icon: "science",
@@ -210,6 +232,7 @@ const ARBOLES_INVESTIGACION = {
       },
       {
         id: "aleaciones_ligeras",
+        componenteId: "punta_reforzada",
         label: "Aleaciones ligeras",
         position: { x: 40, y: 50 },
         icon: "category",
@@ -217,6 +240,7 @@ const ARBOLES_INVESTIGACION = {
       },
       {
         id: "proteccion_radiacion",
+        componenteId: "cabina_blindada",
         label: "Protección contra radiación",
         position: { x: 65, y: 25 },
         icon: "shield",
@@ -224,6 +248,7 @@ const ARBOLES_INVESTIGACION = {
       },
       {
         id: "estructura_modular",
+        componenteId: "modulo_estacion",
         label: "Estructura modular",
         position: { x: 65, y: 75 },
         icon: "view_in_ar",
@@ -231,6 +256,7 @@ const ARBOLES_INVESTIGACION = {
       },
       {
         id: "habitat_presurizado",
+        componenteId: "modulo_alunizaje",
         label: "Hábitat presurizado",
         position: { x: 88, y: 50 },
         icon: "home",

@@ -1,8 +1,9 @@
 <p class="juego-etiqueta">CAMPAÑA ESPACIAL</p>
 <h2>Árbol de misiones</h2>
 <p class="juego-descripcion">
-  Selecciona la misión que quieres tener activa. Las conexiones muestran la
-  rama principal y las misiones secundarias.
+  Selecciona una misión para consultar sus requisitos y condiciones de victoria.
+  Las misiones prerequisito habilitan el inicio; cumple las condiciones y lanza
+  desde el Taller para intentar completarla.
 </p>
 
 <div class="misiones-arbol-scroll">
@@ -21,12 +22,27 @@
 </div>
 
 <section class="mision-actual" aria-live="polite">
-  <div>
-    <p class="juego-etiqueta">MISIÓN ACTUAL</p>
+  <div class="mision-actual-resumen">
+    <p class="juego-etiqueta">MISIÓN SELECCIONADA</p>
     <h3 id="mision-actual-titulo">Lanzamiento de un satélite artificial</h3>
+    <p id="mision-tipo" class="mision-tipo"></p>
     <p id="mision-actual-descripcion"></p>
+    <p id="mision-duracion" class="mision-duracion"></p>
+    <p id="mision-recompensa" class="mision-recompensa"></p>
+    <p id="mision-actual-mensaje" class="mision-actual-mensaje" role="status"></p>
+    <button id="btn-confirmar-mision" class="mision-confirmar" type="button">
+      Confirmar e iniciar misión
+    </button>
   </div>
-  <p id="mision-actual-mensaje" class="mision-actual-mensaje">
-    Haz clic en una misión para seleccionarla.
-  </p>
+
+  <div class="mision-actual-condiciones">
+    <section>
+      <h4>Misiones prerequisito</h4>
+      <ul id="mision-prerequisitos" class="mision-lista-condiciones"></ul>
+    </section>
+    <section>
+      <h4>Condiciones para lanzar</h4>
+      <ul id="mision-condiciones" class="mision-lista-condiciones"></ul>
+    </section>
+  </div>
 </section>

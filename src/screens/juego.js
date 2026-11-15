@@ -43,11 +43,19 @@ export default function configurarJuego({
     turno.textContent = partida.mes ?? 1;
   }
 
+  const actualizarMisionTree = inicializarBase();
+  function actualizarEstadoCampana(partida) {
+    actualizarHUD(partida);
+    actualizarMisionTree();
+  }
+
   const actualizarVistas = {
-    misionTree: inicializarBase(),
-    taller: inicializarTaller({ onResourcesChanged: actualizarHUD }),
+    misionTree: actualizarMisionTree,
+    taller: inicializarTaller({
+      onResourcesChanged: actualizarEstadoCampana,
+    }),
     investigacion: inicializarInvestigacion({
-      onResourcesChanged: actualizarHUD,
+      onResourcesChanged: actualizarEstadoCampana,
       categoriaInicial: categoriaInvestigacionInicial,
     }),
   };
@@ -102,7 +110,7 @@ export default function configurarJuego({
       throw new Error("No se pudo guardar el avance del turno.");
     }
 
-    actualizarHUD(partidaActualizada);
+    actualizarEstadoCampana(partidaActualizada);
     actualizarVistas.taller();
   };
 
