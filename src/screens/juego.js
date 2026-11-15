@@ -1,5 +1,7 @@
 import gameState, { INGRESO_MENSUAL } from "../game-state.js";
-import { NODOS } from "./mision.js";
+import inicializarBase from "./juego/base.js";
+import inicializarTaller from "./juego/taller.js";
+import inicializarInvestigacion from "./juego/investigacion.js";
 
 export default function configurarJuego() {
   const paneles = document.querySelectorAll("[data-juego-panel]");
@@ -10,25 +12,9 @@ export default function configurarJuego() {
     "juego-ingreso-presupuesto",
   );
   const ingresoCiencia = document.getElementById("juego-ingreso-ciencia");
-  const nodoIcon = document.getElementById("nodo-actual-icon");
-  const nodoActual = document.getElementById("juego-nodo-actual");
   const turno = document.getElementById("juego-turno");
   const btnPasarTurno = document.getElementById("btn-pasar-turno");
   const btnToggleSidebar = document.getElementById("btn-toggle-sidebar");
-
-  function mostrarVista(vista) {
-    paneles.forEach((panel) => {
-      panel.hidden = panel.dataset.juegoPanel !== vista;
-    });
-
-    botonesVista.forEach((boton) => {
-      if (boton.dataset.juegoVista === vista) {
-        boton.setAttribute("aria-current", "page");
-      } else {
-        boton.removeAttribute("aria-current");
-      }
-    });
-  }
 
   function actualizarHUD(partida = gameState.obtenerSlotActual()) {
     if (!partida) {
@@ -48,9 +34,31 @@ export default function configurarJuego() {
       "es-AR",
     );
 
-    nodoIcon.textContent = NODOS.find((n) => n.id === partida.nodoActual)?.icon ?? "public";
-    nodoActual.textContent = NODOS.find((n) => n.id === partida.nodoActual)?.label ?? "Tierra";
     turno.textContent = partida.mes ?? 1;
+  }
+
+  const actualizarVistas = {
+    base: inicializarBase(),
+    taller: inicializarTaller(),
+    investigacion: inicializarInvestigacion({
+      onResourcesChanged: actualizarHUD,
+    }),
+  };
+
+  function mostrarVista(vista) {
+    paneles.forEach((panel) => {
+      panel.hidden = panel.dataset.juegoPanel !== vista;
+    });
+
+    botonesVista.forEach((boton) => {
+      if (boton.dataset.juegoVista === vista) {
+        boton.setAttribute("aria-current", "page");
+      } else {
+        boton.removeAttribute("aria-current");
+      }
+    });
+
+    actualizarVistas[vista]?.();
   }
 
   botonesVista.forEach((boton) => {

@@ -61,13 +61,33 @@
       <p class="juego-descripcion">
         Prepara y mejora el equipamiento para futuras misiones.
       </p>
+      <div id="taller-contenido"></div>
     </section>
 
     <section class="juego-panel" data-juego-panel="investigacion" hidden>
       <p class="juego-etiqueta">PROGRESO CIENTÍFICO</p>
       <h2>Árbol de investigación</h2>
       <p class="juego-descripcion">
-        Consulta las etapas de desarrollo tecnológico de la misión.
+        Desbloquea tecnologías conectadas usando tus puntos de investigación.
+      </p>
+      <div class="investigacion-mapa">
+        <svg
+          class="investigacion-conexiones"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <g id="conexiones-investigacion"></g>
+        </svg>
+        <div id="nodos-investigacion"></div>
+      </div>
+      <p
+        id="investigacion-mensaje"
+        class="investigacion-mensaje"
+        aria-live="polite"
+      >
+        Selecciona un nodo conectado para investigar.
       </p>
     </section>
   </main>

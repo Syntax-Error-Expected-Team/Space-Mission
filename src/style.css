@@ -112,25 +112,6 @@ body {
     left: 24px;
     display: flex;
     gap: 12px;
-    .btn-icono {
-      width: 44px;
-      height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: rgba(17, 24, 39, 0.8);
-      border: 1px solid rgba(75, 85, 99, 0.4);
-      color: #ffffff;
-      border-radius: 50%;
-      cursor: pointer;
-      transition: all 0.2s ease-in-out;
-      backdrop-filter: blur(5px);
-      &:hover {
-        background-color: #374151;
-        border-color: #9ca3af;
-        transform: scale(1.1);
-      }
-    }
   }
 
   /* Texto en la esquina inferior derecha */
@@ -143,6 +124,26 @@ body {
     letter-spacing: 1.5px;
     text-transform: uppercase;
     font-weight: 500;
+  }
+}
+
+.btn-icono {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(17, 24, 39, 0.8);
+  border: 1px solid rgba(75, 85, 99, 0.4);
+  color: #ffffff;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  backdrop-filter: blur(5px);
+  &:hover {
+    background-color: #374151;
+    border-color: #9ca3af;
+    transform: scale(1.1);
   }
 }
 
@@ -334,7 +335,7 @@ body {
         color: #38bdf8;
 
         span.material-symbols-outlined {
-          font-size: 20px;
+          font-size: 25px;
         }
 
         .recurso-detalles {
@@ -342,12 +343,12 @@ body {
           flex-direction: column;
           gap: 3px;
           color: #f3f4f6;
-          font-size: 0.9rem;
+          font-size: 1rem;
         }
 
         small {
           color: #9ca3af;
-          font-size: 0.72rem;
+          font-size: 0.8rem;
           font-weight: 400;
         }
       }
@@ -636,6 +637,122 @@ body {
       color: #9ca3af;
       font-size: 0.85rem;
     }
+  }
+
+  .taller-estado-vacio {
+    max-width: 560px;
+    color: #cbd5e1;
+
+    p {
+      margin: 0;
+      line-height: 1.5;
+    }
+  }
+
+  .investigacion-mapa {
+    position: relative;
+    width: 100%;
+    min-width: 680px;
+    min-height: 500px;
+    overflow: hidden;
+    border: 1px solid rgba(75, 85, 99, 0.45);
+    border-radius: 12px;
+    background:
+      radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+      rgba(17, 24, 39, 0.45);
+    background-size: 32px 32px;
+  }
+
+  .investigacion-conexiones {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+
+    .investigacion-conexion {
+      stroke: rgba(96, 165, 250, 0.5);
+      stroke-width: 1.2;
+      vector-effect: non-scaling-stroke;
+    }
+  }
+
+  #nodos-investigacion {
+    position: absolute;
+    inset: 0;
+  }
+
+  .investigacion-nodo {
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    width: 142px;
+    min-height: 116px;
+    padding: 12px 10px;
+    transform: translate(-50%, -50%);
+    border: 1px solid rgba(75, 85, 99, 0.8);
+    border-radius: 10px;
+    background: #111827;
+    color: #d1d5db;
+    font: inherit;
+    text-align: center;
+    cursor: pointer;
+    transition:
+      border-color 0.2s ease,
+      background-color 0.2s ease;
+
+    &:focus-visible {
+      outline: 2px solid #93c5fd;
+      outline-offset: 3px;
+    }
+
+    &.investigacion-completada {
+      border-color: #22c55e;
+      background: rgba(20, 83, 45, 0.9);
+      color: #f0fdf4;
+    }
+
+    &.investigacion-disponible {
+      border-color: #3b82f6;
+
+      &:hover {
+        background: rgba(30, 64, 115, 0.95);
+      }
+    }
+
+    &.investigacion-insuficiente {
+      border-color: #f59e0b;
+      color: #fde68a;
+    }
+
+    &.investigacion-bloqueada {
+      opacity: 0.55;
+    }
+
+    .investigacion-nodo-icono {
+      color: #60a5fa;
+      font-size: 24px;
+    }
+
+    .investigacion-nodo-nombre {
+      font-size: 0.82rem;
+      line-height: 1.25;
+    }
+
+    .investigacion-nodo-costo {
+      color: #9ca3af;
+      font-size: 0.72rem;
+    }
+  }
+
+  .investigacion-mensaje {
+    min-height: 1.5em;
+    margin: 12px 0 0;
+    color: #cbd5e1;
+    font-size: 0.9rem;
   }
 
   .juego-sidebar {

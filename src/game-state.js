@@ -7,6 +7,7 @@ export const INGRESO_MENSUAL = {
   presupuesto: 250,
   ciencia: 20,
 };
+export const INVESTIGACION_INICIAL = "fundamentos_cientificos";
 
 const opcionesPorDefecto = { musica: true, volumen: 50 };
 
@@ -73,6 +74,7 @@ export class GameStateManager {
       mes: 1,
       presupuesto: 1000,
       ciencia: 0,
+      investigacionesCompletadas: [INVESTIGACION_INICIAL],
       nodoActual: "tierra",
       completados: [],
       desbloqueados: ["tierra"],

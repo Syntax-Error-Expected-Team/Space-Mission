@@ -6,7 +6,6 @@ import menuHtml from "./partials/menu.html?raw";
 import slotsHtml from "./partials/slots.html?raw";
 import misionHtml from "./partials/mision.html?raw";
 import juegoHtml from "./partials/juego.html?raw";
-import investigacionHtml from "./partials/investigacion.html?raw";
 
 // Importar lógica y estado
 import inicializarMenu from "./screens/menu.js";
@@ -20,7 +19,6 @@ document.getElementById("pantalla-menu").innerHTML = menuHtml;
 document.getElementById("pantalla-slots").innerHTML = slotsHtml;
 document.getElementById("pantalla-mision").innerHTML = misionHtml;
 document.getElementById("pantalla-juego").innerHTML = juegoHtml;
-document.getElementById("pantalla-investigacion").innerHTML = investigacionHtml;
 
 function mostrarPantalla(idPantalla) {
   const pantallas = document.querySelectorAll(".pantalla");
