@@ -1,4 +1,6 @@
 import gameState from "../../game-state.js";
+import { tutorialCuandoSeVea } from "../../robot.js";
+import abrirDialogoDinamico from "../dialog.js";
 import { MISIONES, obtenerCondicionesVictoria } from "./misionTree.js";
 import { ARBOLES_INVESTIGACION } from "./investigacion.js";
 
@@ -1035,6 +1037,17 @@ export default function inicializarTaller({ onResourcesChanged } = {}) {
         ? `¡Lanzamiento exitoso! Recibiste $${mision.recompensa.presupuesto.toLocaleString("es-AR")} y ${mision.recompensa.ciencia.toLocaleString("es-AR")} puntos de investigación.`
         : `Lanzamiento fallido. La tirada fue ${tirada}; la probabilidad era ${probabilidad}%. Puedes ajustar el cohete e intentarlo de nuevo.`,
     );
+    abrirDialogoDinamico({
+      titulo: exito ? "¡Felicitaciones!" : "Lanzamiento fallido",
+      contenido: exito
+        ? `El lanzamiento de "${mision.label}" fue un éxito. ¡Completaste la beta de Space Mission! Gracias por jugar y probar el proyecto. Puedes continuar con las misiones que desbloqueaste.`
+        : `La tirada fue ${tirada} y la probabilidad de éxito era ${probabilidad}%. No te desanimes: vuelve a intentarlo con nuevas combinaciones de componentes e investiga tecnologías para desbloquear nuevas piezas y mejorar tus posibilidades.`,
+      acciones: [
+        {
+          texto: exito ? "Continuar jugando" : "Volver al taller",
+        },
+      ],
+    });
   };
 
   btnDesmontar.onclick = () => {
@@ -1063,5 +1076,39 @@ export default function inicializarTaller({ onResourcesChanged } = {}) {
   };
 
   actualizarTaller();
+  tutorialCuandoSeVea(
+    "taller-intro",
+    document.querySelector('[data-juego-panel="taller"]'),
+    {
+      pasos: [
+        {
+          texto:
+            "¡Bienvenido al Taller! Aquí preparas el cohete para la misión que tienes en curso.",
+          expresion: "saludo",
+        },
+        {
+          texto:
+            "Este es el inventario. Elige una pieza disponible; las que requieren tecnologías todavía no investigadas aparecen bloqueadas.",
+          resaltar: () => document.querySelector(".taller-inventario"),
+        },
+        {
+          texto:
+            "Selecciona una pieza y luego su posición en el cohete, o arrástrala hasta allí. Cada pieza solo encaja en su ranura.",
+          resaltar: () => document.getElementById("taller-cohete"),
+        },
+        {
+          texto:
+            "El resumen muestra el presupuesto restante, el costo de las piezas y la masa total del vehículo en kilogramos.",
+          resaltar: () => document.querySelector(".taller-resumen"),
+        },
+        {
+          texto:
+            "Revisa las condiciones de la misión y la probabilidad estimada. El lanzamiento se habilita cuando el cohete cumple todos los requisitos; la carga útil no afecta la probabilidad de éxito.",
+          expresion: "pensando",
+          resaltar: () => document.querySelector(".taller-resumen"),
+        },
+      ],
+    },
+  );
   return actualizarTaller;
 }

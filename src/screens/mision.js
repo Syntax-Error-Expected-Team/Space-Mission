@@ -113,19 +113,21 @@ function lanzarTutorialCuandoSeVea(contenedor) {
             expresion: "saludo",
           },
           {
-            texto: "Esta es tu plata. Con ella comprás mejoras para tus misiones. ¡No la gastes toda junta!",
+            texto:
+              "Esta es tu presupuesto. Con ella compráras mejoras para tus misiones. ¡No la despilfarres!",
             resaltar: grupoHUD("hud-presupuesto"),
           },
           {
-            texto: "Esto es la ciencia. Sirve para mejoras especiales.",
+            texto:
+              "Esto es la ciencia. Sirve para desarrollar nuevas tecnologias para tu nave!",
             resaltar: grupoHUD("hud-ciencia"),
           },
           {
-            texto: `Cada mes te llegan $${INGRESO_MENSUAL.presupuesto} y ${INGRESO_MENSUAL.ciencia} de ciencia gratis.`,
+            texto: `Mensualmente obtienes $${INGRESO_MENSUAL.presupuesto} y ${INGRESO_MENSUAL.ciencia} puntos de ciencia. ¡Aprovechalos!`,
             expresion: "pensando",
           },
-          "Cada círculo del mapa es una misión. Los apagados todavía están bloqueados.",
-          "¡Empecemos! Tocá la Tierra para tu primera misión.",
+          "Cada círculo del mapa es una region del espacio donde desarrollas tu misiones. Los apagados todavía están bloqueados.",
+          "¡Empecemos! Tocá la Tierra para tu preparar tu primera misión.",
         ],
         objetivo: () => contenedor.querySelector('[data-nodo="tierra"]'),
       });
@@ -144,12 +146,10 @@ export default function inicializarMision({ onIniciarMision, onVolver }) {
   );
   const hudIngresoCiencia = document.getElementById("hud-ingreso-ciencia");
 
-  hudIngresoPresupuesto.textContent = INGRESO_MENSUAL.presupuesto.toLocaleString(
-    "es-AR",
-  );
-  hudIngresoCiencia.textContent = INGRESO_MENSUAL.ciencia.toLocaleString(
-    "es-AR",
-  );
+  hudIngresoPresupuesto.textContent =
+    INGRESO_MENSUAL.presupuesto.toLocaleString("es-AR");
+  hudIngresoCiencia.textContent =
+    INGRESO_MENSUAL.ciencia.toLocaleString("es-AR");
 
   function actualizarHUD() {
     const partida = gameState.obtenerSlotActual();

@@ -60,6 +60,7 @@ body {
   margin: 0;
   color: #d1d5db;
   line-height: 1.5;
+  white-space: pre-line;
 }
 
 .dialog-acciones {
@@ -1539,9 +1540,16 @@ body {
     background: rgba(17, 24, 39, 0.78);
     position: relative;
 
-    .btn-sidebar {
+    .juego-sidebar-acciones {
+      left: 18px;
       bottom: 2%;
       position: absolute;
+      display: flex;
+      gap: 8px;
+    }
+
+    .juego-sidebar-acciones .btn-sidebar {
+      position: static;
     }
 
     .btn-toggle-sidebar {
@@ -1733,6 +1741,17 @@ body {
       display: flex;
       align-items: center;
       gap: 12px;
+    }
+
+    .juego-sidebar-acciones {
+      position: static;
+      flex-shrink: 0;
+      gap: 4px;
+    }
+
+    .juego-sidebar-acciones .btn-icono {
+      width: 36px;
+      height: 36px;
     }
 
     .juego-sidebar .juego-etiqueta {

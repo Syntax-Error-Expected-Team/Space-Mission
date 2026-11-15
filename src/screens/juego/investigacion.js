@@ -1,5 +1,7 @@
 import gameState from "../../game-state.js";
 import { guardarCategoriaInvestigacion } from "../../navigation-state.js";
+import { tutorialCuandoSeVea, tutorialUnaVez } from "../../robot.js";
+import { desbloquearInformacionPorHito } from "./informacion.js";
 
 export const ARBOLES_INVESTIGACION = {
   propulsion: {
@@ -490,11 +492,66 @@ export default function inicializarInvestigacion({
       throw new Error(`No se pudo completar la investigación "${nodo.label}".`);
     }
 
+    const fragmentosNuevos = desbloquearInformacionPorHito(nodo.id);
     mensaje.textContent = `${nodo.label} completada.`;
     actualizarNodos();
     onResourcesChanged();
+    fragmentosNuevos.forEach((fragmento) => {
+      tutorialUnaVez(`informacion-${fragmento.id}`, {
+        pasos: [
+          {
+            texto: "¡Desbloqueaste un nuevo fragmento de información!",
+            expresion: "saludo",
+          },
+          {
+            texto: `Al completar "${nodo.label}" descubriste información sobre ${fragmento.titulo}.`,
+            resaltar: () => document.getElementById("btn-informacion"),
+          },
+          "Tocá Información para abrir tu archivo y leer el fragmento.",
+        ],
+        objetivo: () => document.getElementById("btn-informacion"),
+      });
+    });
   };
 
   mostrarCategoria(categoriaInicial);
+  tutorialCuandoSeVea(
+    "investigacion-intro",
+    document.querySelector('[data-juego-panel="investigacion"]'),
+    {
+      pasos: [
+        {
+          texto:
+            "¡Bienvenido al árbol de investigación! Las tecnologías que desarrolles habilitan nuevos componentes para el Taller.",
+          expresion: "saludo",
+        },
+        {
+          texto:
+            "Usa estas categorías para explorar propulsión, combustible, control, carga útil y estructura.",
+          resaltar: () => document.querySelector(".investigacion-categorias"),
+        },
+        {
+          texto:
+            "Cada mapa muestra tecnologías y sus conexiones. Solo puedes investigar una tecnología conectada a otra que ya completaste.",
+          resaltar: () => document.getElementById("nodos-investigacion"),
+        },
+        {
+          texto:
+            "Los nodos indican su costo y estado. Necesitas suficientes puntos de investigación para desbloquearlos.",
+          resaltar: () =>
+            document.querySelector(
+              "#nodos-investigacion .investigacion-nodo:not(.investigacion-completada)",
+            ) ?? document.querySelector("#nodos-investigacion .investigacion-nodo"),
+        },
+        {
+          texto:
+            "Si te faltan puntos, pasa el mes para recibir ciencia. Al completar una tecnología, su componente correspondiente queda disponible en el Taller.",
+          expresion: "pensando",
+          resaltar: () => document.getElementById("juego-ciencia"),
+        },
+        "El mensaje debajo del árbol te explica si una investigación se completó o qué requisito te falta.",
+      ],
+    },
+  );
   return actualizarNodos;
 }

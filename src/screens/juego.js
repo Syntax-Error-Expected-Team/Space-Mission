@@ -2,6 +2,7 @@ import gameState, { INGRESO_MENSUAL } from "../game-state.js";
 import inicializarBase from "./juego/misionTree.js";
 import inicializarTaller from "./juego/taller.js";
 import inicializarInvestigacion from "./juego/investigacion.js";
+import { mostrarDialogoInformacion } from "./juego/informacion.js";
 import { guardarVistaJuego } from "../navigation-state.js";
 import { tutorialCuandoSeVea } from "../robot.js";
 const visible = (e) => (e && e.getBoundingClientRect().width > 0 ? e : null);
@@ -60,6 +61,7 @@ export default function configurarJuego({
   const btnPasarTurno = document.getElementById("btn-pasar-turno");
   const btnToggleSidebar = document.getElementById("btn-toggle-sidebar");
   const btnVolver = document.getElementById("btn-misiones-volver");
+  const btnInformacion = document.getElementById("btn-informacion");
 
   function actualizarHUD(partida = gameState.obtenerSlotActual()) {
     if (!partida) {
@@ -157,6 +159,11 @@ export default function configurarJuego({
   if (btnVolver && onVolver) {
     btnVolver.onclick = onVolver;
   }
+
+  if (!btnInformacion) {
+    throw new Error("No se encontró el botón de información desbloqueada.");
+  }
+  btnInformacion.onclick = mostrarDialogoInformacion;
 
   mostrarVista(vistaInicial);
   actualizarHUD();

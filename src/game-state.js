@@ -76,6 +76,7 @@ export class GameStateManager {
       presupuesto: 1000,
       ciencia: 0,
       investigacionesCompletadas: [INVESTIGACION_INICIAL],
+      fragmentosInformacionDesbloqueados: [],
       misionActual: MISION_INICIAL,
       misionesCompletadas: [],
       misionEnCurso: null,
