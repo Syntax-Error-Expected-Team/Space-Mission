@@ -1,0 +1,1281 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Centro de control espacial</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --fondo: #101923;
+    --panel: #1b2937;
+    --borde: #344b5e;
+    --turquesa: #50dfcc;
+    --texto: #edf5fa;
+    --suave: #9db2c2;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 50% 40%, #243e50, #101923 70%);
+    color: var(--texto);
+    font-family: Arial, sans-serif;
+}
+
+/* ENCABEZADO */
+
+header {
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    background: #101923;
+    border-bottom: 1px solid var(--borde);
+}
+
+.logo {
+    color: var(--turquesa);
+    font-weight: bold;
+    font-size: 17px;
+    letter-spacing: 1px;
+}
+
+.estado-superior {
+    color: #a9bdca;
+    font-size: 12px;
+}
+
+/* DISTRIBUCIÓN PRINCIPAL */
+
+.contenedor {
+    height: calc(100vh - 55px);
+    display: grid;
+    grid-template-columns: 245px minmax(300px, 1fr) 255px;
+    gap: 12px;
+    padding: 12px;
+    min-height: 0;
+}
+
+.panel {
+    background: linear-gradient(145deg, #1d3040, #172532);
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    padding: 12px;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.titulo {
+    color: var(--turquesa);
+    font-size: 13px;
+    letter-spacing: .7px;
+    margin: 0 0 5px;
+}
+
+.descripcion {
+    color: var(--suave);
+    font-size: 10px;
+    margin: 0 0 12px;
+}
+
+/* INVENTARIO */
+
+.inventario {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.grupo {
+    border-bottom: 1px solid #344b5e;
+    padding-bottom: 10px;
+}
+
+.lista-piezas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 7px;
+}
+
+.pieza {
+    min-width: 0;
+    min-height: 61px;
+    padding: 7px;
+    border-radius: 8px;
+    border: 1px solid #40596d;
+    background: #263b4d;
+    cursor: grab;
+    transition: .2s;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.pieza:hover {
+    background: #34556a;
+    border-color: var(--turquesa);
+    transform: translateY(-2px);
+    box-shadow: 0 0 12px #50dfcc33;
+}
+
+.pieza:active {
+    cursor: grabbing;
+}
+
+.pieza.instalada {
+    opacity: .35;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.icono {
+    font-size: 23px;
+}
+
+.pieza b {
+    display: block;
+    font-size: 10px;
+    line-height: 1.2;
+}
+
+.pieza small {
+    display: block;
+    color: var(--turquesa);
+    font-size: 9px;
+    margin-top: 4px;
+}
+
+/* ZONA CENTRAL */
+
+.centro {
+    position: relative;
+    min-width: 0;
+    border: 1px solid #40596b;
+    border-radius: 12px;
+    overflow: hidden;
+    background:
+        linear-gradient(#ffffff08 1px, transparent 1px),
+        linear-gradient(90deg, #ffffff08 1px, transparent 1px),
+        radial-gradient(ellipse at center, #29475b, #142331 75%);
+    background-size: 25px 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px;
+}
+
+.centro h2 {
+    color: var(--turquesa);
+    font-size: 14px;
+    margin: 0;
+    letter-spacing: 1px;
+}
+
+.subtitulo-central {
+    color: #9db2c2;
+    font-size: 10px;
+    margin-top: 5px;
+}
+
+.area-cohete {
+    flex: 1;
+    width: 100%;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.plataforma {
+    position: absolute;
+    bottom: 3%;
+    width: min(65%, 360px);
+    height: 22px;
+    border: 2px solid #6c91a3;
+    border-radius: 50%;
+    box-shadow: 0 0 20px #50dfcc33;
+}
+
+.cohete {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    transform: scale(.88);
+    transform-origin: center;
+    filter: drop-shadow(0 10px 12px #0008);
+}
+
+.zona {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #b4c8d5;
+    background: linear-gradient(90deg, #263e50, #38566b, #263e50);
+    border: 2px dashed #668397;
+    font-size: 10px;
+    transition: .25s;
+}
+
+.zona:hover,
+.zona.sobre {
+    border-color: var(--turquesa);
+    background: #315e69;
+    box-shadow: 0 0 18px #50dfcc66;
+}
+
+.zona.completa {
+    border: 2px solid #b6d4df;
+    color: #142330;
+    background: linear-gradient(90deg, #6c8796, #e0edf1, #7894a4);
+    box-shadow: inset 0 0 12px #ffffff77;
+}
+
+.zona .simbolo {
+    font-size: 25px;
+}
+
+.zona .numero {
+    font-size: 8px;
+    color: #c2d5df;
+    margin-top: 3px;
+}
+
+.zona.completa .numero {
+    color: #153b36;
+}
+
+.zona.punta {
+    width: 72px;
+    height: 68px;
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+    border-radius: 0;
+}
+
+.zona.cabina {
+    width: 105px;
+    height: 62px;
+    border-radius: 45% 45% 8px 8px;
+}
+
+.zona.tanque {
+    width: 112px;
+    height: 90px;
+}
+
+.zona.alas {
+    width: 165px;
+    height: 48px;
+    border-radius: 5px;
+}
+
+.zona.motor {
+    width: 85px;
+    height: 53px;
+    border-radius: 5px 5px 20px 20px;
+}
+
+.conexion {
+    color: #65a5b7;
+    font-size: 9px;
+    height: 9px;
+}
+
+/* LLAMA DEL MOTOR */
+
+.llama {
+    width: 24px;
+    height: 38px;
+    background: linear-gradient(#fff7a1, #ff9d36, #ed4935, transparent);
+    clip-path: polygon(20% 0, 80% 0, 100% 55%, 50% 100%, 0 55%);
+    filter: drop-shadow(0 0 8px #ff9c35);
+    animation: fuego .35s infinite alternate;
+    opacity: .8;
+}
+
+@keyframes fuego {
+    from { transform: scaleY(.8); }
+    to { transform: scaleY(1.15); }
+}
+
+/* ZONA INFERIOR CENTRAL */
+
+.pie-centro {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    align-items: center;
+}
+
+.carga {
+    min-width: 0;
+    min-height: 47px;
+    border: 1px dashed #d5a35d;
+    border-radius: 8px;
+    background: #352f28;
+    padding: 7px;
+    color: #f0c781;
+    font-size: 10px;
+}
+
+.objeto-carga {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px;
+    margin: 2px;
+    background: #57452e;
+    border-radius: 5px;
+}
+
+.objeto-carga button {
+    width: auto;
+    padding: 2px 5px;
+    margin: 0;
+    background: #9b4b42;
+    color: white;
+}
+
+.botones {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+button {
+    border: 0;
+    border-radius: 6px;
+    padding: 8px 10px;
+    background: var(--turquesa);
+    color: #10242d;
+    font-size: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    filter: brightness(1.15);
+}
+
+button.secundario {
+    background: #435c70;
+    color: white;
+}
+
+/* PANEL DERECHO */
+
+.derecha {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.tarjeta {
+    background: #243747;
+    border: 1px solid #40596d;
+    border-radius: 9px;
+    padding: 11px;
+}
+
+.tarjeta h3 {
+    color: var(--turquesa);
+    font-size: 12px;
+    margin: 0 0 10px;
+}
+
+.dinero {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #536d7e;
+    background: #142330;
+    color: white;
+    outline: none;
+}
+
+.dato {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    margin: 9px 0;
+    color: #c5d5df;
+}
+
+.valor {
+    color: var(--turquesa);
+    font-weight: bold;
+}
+
+.barra {
+    height: 9px;
+    border-radius: 10px;
+    background: #101923;
+    overflow: hidden;
+    margin: 10px 0 5px;
+}
+
+.progreso {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #22a88c, #6dffb1);
+    transition: .4s;
+}
+
+.porcentaje {
+    text-align: right;
+    font-size: 11px;
+    color: #d9e8ef;
+}
+
+.lista-gastos {
+    font-size: 10px;
+    line-height: 1.8;
+    color: #c3d2dc;
+    max-height: 105px;
+    overflow: hidden;
+}
+
+.mision {
+    background: linear-gradient(120deg, #263d4e, #1c2c3b);
+    border: 1px solid #40596d;
+    border-radius: 9px;
+    padding: 11px;
+}
+
+.mision h3 {
+    font-size: 12px;
+    color: var(--turquesa);
+    margin: 0 0 8px;
+}
+
+.estado-mision {
+    color: #b9cad5;
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+/* NUBE DE INFORMACIÓN */
+
+.nube-info {
+    position: fixed;
+    z-index: 100;
+    width: 225px;
+    padding: 13px;
+    border-radius: 10px;
+    background: #142735ee;
+    border: 1px solid var(--turquesa);
+    box-shadow: 0 8px 30px #0009;
+    backdrop-filter: blur(10px);
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(5px);
+    transition: opacity .15s, transform .15s;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.nube-info.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.nube-info h3 {
+    margin: 0 0 8px;
+    color: var(--turquesa);
+    font-size: 14px;
+}
+
+.nube-info .icono-grande {
+    font-size: 25px;
+    margin-right: 7px;
+}
+
+.nube-info p {
+    margin: 4px 0;
+    color: #d4e2e9;
+}
+
+/* AVISO DE ESTADO */
+
+.aviso {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 7px 10px;
+    border-radius: 6px;
+    background: #193d42;
+    color: #8ff3d9;
+    font-size: 10px;
+    opacity: 0;
+    transition: .3s;
+    pointer-events: none;
+}
+
+.aviso.visible {
+    opacity: 1;
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 850px) {
+    .contenedor {
+        grid-template-columns: 190px minmax(260px, 1fr) 200px;
+        gap: 7px;
+        padding: 7px;
+    }
+
+    .panel {
+        padding: 8px;
+    }
+
+    .pieza {
+        min-height: 52px;
+        padding: 5px;
+    }
+
+    .pieza b {
+        font-size: 9px;
+    }
+
+    .cohete {
+        transform: scale(.72);
+    }
+
+    header {
+        height: 45px;
+    }
+
+    .contenedor {
+        height: calc(100vh - 45px);
+    }
+}
+
+@media(max-width: 650px) {
+    body {
+        overflow: auto;
+        height: auto;
+    }
+
+    .contenedor {
+        height: auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .panel, .centro {
+        min-height: 300px;
+    }
+
+    .centro {
+        min-height: 570px;
+    }
+
+    .derecha {
+        min-height: auto;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🚀 SPACE X | CENTRO DE CONTROL</div>
+    <div class="estado-superior">SISTEMA DE MONTAJE · EN LÍNEA</div>
+</header>
+
+<div class="contenedor">
+
+    <!-- INVENTARIO IZQUIERDO -->
+    <aside class="panel inventario">
+
+        <div class="grupo">
+            <h2 class="titulo">🧩 COMPONENTES</h2>
+            <p class="descripcion">Arrastrá las piezas al cohete.</p>
+            <div class="lista-piezas" id="inventarioPartes"></div>
+        </div>
+
+        <div>
+            <h2 class="titulo">PLANOS </h2>
+            <p class="descripcion">Arrastralas al compartimiento.</p>
+            <div class="lista-piezas" id="inventarioHerramientas"></div>
+        </div>
+
+    </aside>
+
+    <!-- COHETE CENTRAL -->
+    <main class="centro">
+
+        <div>
+            <h2>ENSAMBLAJE DEL VEHÍCULO</h2>
+            <div class="subtitulo-central">Vista de montaje · Arrastrá cada componente a su posición</div>
+        </div>
+
+        <div class="aviso" id="aviso"></div>
+
+        <div class="area-cohete">
+
+            <div class="plataforma"></div>
+
+            <div class="cohete">
+
+                <div class="zona punta" data-tipo="punta"
+                    ondragover="permitir(event)"
+                    ondragleave="salir(event)"
+                    ondrop="soltarParte(event)">
+                    <span class="etiqueta">PUNTA</span>
+                </div>
+
+                <div class="conexion">│ ACOPLE 01 │</div>
+
+                <div class="zona cabina" data-tipo="cabina"
+                    ondragover="permitir(event)"
+                    ondragleave="salir(event)"
+                    ondrop="soltarParte(event)">
+                    <span class="etiqueta">CABINA</span>
+                </div>
+
+                <div class="conexion">│ ACOPLE 02 │</div>
+
+                <div class="zona tanque" data-tipo="tanque"
+                    ondragover="permitir(event)"
+                    ondragleave="salir(event)"
+                    ondrop="soltarParte(event)">
+                    <span class="etiqueta">TANQUE</span>
+                </div>
+
+                <div class="conexion">│ ACOPLE 03 │</div>
+
+                <div class="zona alas" data-tipo="alas"
+                    ondragover="permitir(event)"
+                    ondragleave="salir(event)"
+                    ondrop="soltarParte(event)">
+                    <span class="etiqueta">ESTABILIZADORES</span>
+                </div>
+
+                <div class="conexion">│ ACOPLE 04 │</div>
+
+                <div class="zona motor" data-tipo="motor"
+                    ondragover="permitir(event)"
+                    ondragleave="salir(event)"
+                    ondrop="soltarParte(event)">
+                    <span class="etiqueta">MOTOR</span>
+                </div>
+
+                <div class="llama" id="llama" style="display:none"></div>
+
+            </div>
+        </div>
+
+        <div class="pie-centro">
+
+            <div>
+                <div class="titulo">📦 CARGA DE MISIÓN</div>
+                <div class="carga" id="zonaCarga"
+                    ondragover="permitir(event)"
+                    ondragleave="salir(event)"
+                    ondrop="soltarHerramienta(event)">
+                    Arrastrá las herramientas aquí.
+                </div>
+            </div>
+
+            <div class="botones">
+                <button onclick="comprobarMontaje()">VERIFICAR</button>
+                <button class="secundario" onclick="reiniciar()">REINICIAR</button>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- PANEL DERECHO -->
+    <aside class="panel derecha">
+
+        <div class="tarjeta">
+            <h3>💰 PRESUPUESTO DE MISIÓN</h3>
+
+            <label style="font-size:10px;color:#aebfcb">
+                Fondos disponibles
+            </label>
+
+            <input class="dinero" type="number" id="dinero"
+                value="15000" min="0" oninput="actualizar()">
+
+            <div class="dato">
+                <span>Gastado</span>
+                <span class="valor" id="gastado">$0</span>
+            </div>
+
+            <div class="dato">
+                <span>Restante</span>
+                <span class="valor" id="restante">$15000</span>
+            </div>
+        </div>
+
+        <div class="tarjeta">
+            <h3>📊 PROGRESO DEL MONTAJE</h3>
+
+            <div class="barra">
+                <div class="progreso" id="progreso"></div>
+            </div>
+
+            <div class="porcentaje" id="porcentaje">0% COMPLETADO</div>
+
+            <div class="dato">
+                <span>Piezas instaladas</span>
+                <span class="valor" id="cantidadPiezas">0 / 5</span>
+            </div>
+        </div>
+
+        <div class="tarjeta">
+            <h3>📋 REGISTRO DE GASTOS</h3>
+            <div class="lista-gastos" id="gastos">
+                Todavía no hay gastos.
+            </div>
+        </div>
+
+        <div class="mision">
+            <h3>🛰️ ESTADO DE MISIÓN</h3>
+            <div class="estado-mision" id="estado">
+                Sistema iniciado.<br>
+                Esperando el montaje de los componentes.
+            </div>
+        </div>
+
+    </aside>
+
+</div>
+
+<div class="nube-info" id="nubeInfo"></div>
+
+<script>
+
+// COMPONENTES DEL COHETE
+
+const partes = [
+    {
+        id: "punta",
+        nombre: "Punta",
+        icono: "🔺",
+        precio: 1200,
+        peso: "50 kg",
+        material: "Aleación de aluminio",
+        descripcion: "Protege la parte superior del cohete y mejora su comportamiento aerodinámico."
+    },
+    {
+        id: "cabina",
+        nombre: "Cabina",
+        icono: "🪟",
+        precio: 2500,
+        peso: "200 kg",
+        material: "Aluminio reforzado",
+        descripcion: "Compartimiento principal donde se ubican los sistemas de control."
+    },
+    {
+        id: "tanque",
+        nombre: "Tanque de combustible",
+        icono: "🛢️",
+        precio: 3500,
+        peso: "500 kg",
+        material: "Acero especial",
+        descripcion: "Almacena el combustible necesario para impulsar el cohete."
+    },
+    {
+        id: "alas",
+        nombre: "Estabilizadores",
+        icono: "🪽",
+        precio: 1800,
+        peso: "80 kg",
+        material: "Fibra de carbono",
+        descripcion: "Ayudan a mantener la estabilidad durante el vuelo."
+    },
+    {
+        id: "motor",
+        nombre: "Motor",
+        icono: "🔥",
+        precio: 4500,
+        peso: "300 kg",
+        material: "Aleación resistente al calor",
+        descripcion: "Genera el empuje necesario para el despegue."
+    }
+];
+
+// HERRAMIENTAS
+
+const herramientas = [
+    {
+        id: "taladro",
+        nombre: "Taladro",
+        icono: "🔩",
+        precio: 700,
+        peso: "2 kg",
+        material: "Acero",
+        descripcion: "Permite perforar y preparar las superficies."
+    },
+    {
+        id: "martillo",
+        nombre: "Martillo",
+        icono: "🔨",
+        precio: 400,
+        peso: "1 kg",
+        material: "Hierro",
+        descripcion: "Sirve para ajustar y fijar componentes."
+    },
+    {
+        id: "llave",
+        nombre: "Llave",
+        icono: "🔧",
+        precio: 500,
+        peso: "0.5 kg",
+        material: "Metal",
+        descripcion: "Permite ajustar tuercas y conexiones."
+    },
+    {
+        id: "linterna",
+        nombre: "Linterna",
+        icono: "🔦",
+        precio: 300,
+        peso: "0.8 kg",
+        material: "Plástico",
+        descripcion: "Ilumina zonas de trabajo."
+    }
+];
+
+let instaladas = {};
+let carga = [];
+let elementoArrastrado = null;
+
+// INVENTARIO
+
+function mostrarInventarios() {
+
+    const contenedorPartes = document.getElementById("inventarioPartes");
+    const contenedorHerramientas = document.getElementById("inventarioHerramientas");
+
+    contenedorPartes.innerHTML = "";
+    contenedorHerramientas.innerHTML = "";
+
+    partes.forEach(parte => {
+
+        const pieza = crearPieza(parte, "parte", !!instaladas[parte.id]);
+
+        contenedorPartes.appendChild(pieza);
+    });
+
+    herramientas.forEach(herramienta => {
+
+        const pieza = crearPieza(
+            herramienta,
+            "herramienta",
+            carga.some(x => x.id === herramienta.id)
+        );
+
+        contenedorHerramientas.appendChild(pieza);
+    });
+}
+
+function crearPieza(elemento, tipo, ocupada) {
+
+    const pieza = document.createElement("div");
+
+    pieza.className = "pieza";
+    pieza.draggable = !ocupada;
+
+    if (ocupada) pieza.classList.add("instalada");
+
+    pieza.innerHTML = `
+        <span class="icono">${elemento.icono}</span>
+        <div>
+            <b>${elemento.nombre}</b>
+            <small>$${elemento.precio}</small>
+        </div>
+    `;
+
+    pieza.addEventListener("mouseenter", e => mostrarInfo(elemento, e));
+    pieza.addEventListener("mousemove", moverNube);
+    pieza.addEventListener("mouseleave", ocultarInfo);
+
+    pieza.addEventListener("dragstart", event => {
+
+        if (ocupada) {
+            event.preventDefault();
+            return;
+        }
+
+        elementoArrastrado = elemento;
+
+        event.dataTransfer.setData("id", elemento.id);
+        event.dataTransfer.setData("tipo", tipo);
+    });
+
+    return pieza;
+}
+
+// INFORMACIÓN FLOTANTE
+
+function mostrarInfo(elemento, evento) {
+
+    const nube = document.getElementById("nubeInfo");
+
+    nube.innerHTML = `
+        <h3><span class="icono-grande">${elemento.icono}</span>${elemento.nombre}</h3>
+        <p><b>Precio:</b> $${elemento.precio}</p>
+        <p><b>Peso:</b> ${elemento.peso}</p>
+        <p><b>Material:</b> ${elemento.material}</p>
+        <p><b>Descripción:</b> ${elemento.descripcion}</p>
+    `;
+
+    nube.classList.add("visible");
+
+    moverNube(evento);
+}
+
+function moverNube(evento) {
+
+    if (!evento) return;
+
+    const nube = document.getElementById("nubeInfo");
+
+    let x = evento.clientX + 18;
+    let y = evento.clientY + 18;
+
+    const ancho = 225;
+    const alto = nube.offsetHeight || 150;
+
+    if (x + ancho > window.innerWidth) {
+        x = evento.clientX - ancho - 15;
+    }
+
+    if (y + alto > window.innerHeight) {
+        y = window.innerHeight - alto - 10;
+    }
+
+    nube.style.left = Math.max(5, x) + "px";
+    nube.style.top = Math.max(5, y) + "px";
+}
+
+function ocultarInfo() {
+    document.getElementById("nubeInfo").classList.remove("visible");
+}
+
+// ARRASTRAR Y SOLTAR
+
+function permitir(event) {
+    event.preventDefault();
+    event.currentTarget.classList.add("sobre");
+}
+
+function salir(event) {
+    event.currentTarget.classList.remove("sobre");
+}
+
+// PRESUPUESTO
+
+function obtenerTotal() {
+
+    let total = 0;
+
+    partes.forEach(parte => {
+        if (instaladas[parte.id]) total += parte.precio;
+    });
+
+    carga.forEach(elemento => {
+        total += elemento.precio;
+    });
+
+    return total;
+}
+
+function sePuedeComprar(elemento) {
+
+    const dinero = Number(document.getElementById("dinero").value) || 0;
+
+    return obtenerTotal() + elemento.precio <= dinero;
+}
+
+// INSTALAR PIEZAS
+
+function soltarParte(event) {
+
+    event.preventDefault();
+
+    const zona = event.currentTarget;
+    zona.classList.remove("sobre");
+
+    const id = event.dataTransfer.getData("id");
+    const tipo = event.dataTransfer.getData("tipo");
+
+    if (tipo !== "parte") return;
+
+    const parte = partes.find(x => x.id === id);
+
+    if (!parte) return;
+
+    if (zona.dataset.tipo !== parte.id) {
+        mostrarAviso("Esa pieza no corresponde a esta posición.");
+        return;
+    }
+
+    if (instaladas[id]) return;
+
+    if (!sePuedeComprar(parte)) {
+        mostrarAviso("Presupuesto insuficiente.");
+        return;
+    }
+
+    instaladas[id] = true;
+
+    zona.classList.add("completa");
+
+    zona.innerHTML = `
+        <span class="simbolo">${parte.icono}</span>
+        <span>${parte.nombre}</span>
+        <span class="numero">✓ INSTALADO</span>
+    `;
+
+    zona.addEventListener("mouseenter", e => mostrarInfo(parte, e));
+    zona.addEventListener("mousemove", moverNube);
+    zona.addEventListener("mouseleave", ocultarInfo);
+
+    if (parte.id === "motor") {
+        document.getElementById("llama").style.display = "block";
+    }
+
+    mostrarInventarios();
+    actualizar();
+
+    document.getElementById("estado").innerHTML =
+        "Componente instalado: <b>" + parte.nombre + "</b>.<br>Acoplamiento registrado correctamente.";
+
+    mostrarAviso("✓ " + parte.nombre + " instalado.");
+}
+
+// CARGAR HERRAMIENTAS
+
+function soltarHerramienta(event) {
+
+    event.preventDefault();
+
+    const zona = event.currentTarget;
+    zona.classList.remove("sobre");
+
+    const id = event.dataTransfer.getData("id");
+    const tipo = event.dataTransfer.getData("tipo");
+
+    if (tipo !== "herramienta") return;
+
+    const herramienta = herramientas.find(x => x.id === id);
+
+    if (!herramienta) return;
+
+    if (carga.some(x => x.id === id)) return;
+
+    if (!sePuedeComprar(herramienta)) {
+        mostrarAviso("Presupuesto insuficiente.");
+        return;
+    }
+
+    carga.push(herramienta);
+
+    mostrarCarga();
+    mostrarInventarios();
+    actualizar();
+
+    document.getElementById("estado").innerHTML =
+        "Herramienta agregada: <b>" + herramienta.nombre + "</b>.";
+}
+
+// MOSTRAR CARGA
+
+function mostrarCarga() {
+
+    const zona = document.getElementById("zonaCarga");
+
+    if (carga.length === 0) {
+        zona.textContent = "Arrastrá las herramientas aquí.";
+        return;
+    }
+
+    zona.innerHTML = "";
+
+    carga.forEach((elemento, indice) => {
+
+        const objeto = document.createElement("span");
+
+        objeto.className = "objeto-carga";
+
+        objeto.innerHTML = `
+            ${elemento.icono} ${elemento.nombre}
+            <button onclick="quitarHerramienta(${indice})">X</button>
+        `;
+
+        objeto.addEventListener("mouseenter", e => mostrarInfo(elemento, e));
+        objeto.addEventListener("mousemove", moverNube);
+        objeto.addEventListener("mouseleave", ocultarInfo);
+
+        zona.appendChild(objeto);
+    });
+}
+
+function quitarHerramienta(indice) {
+
+    carga.splice(indice, 1);
+
+    mostrarCarga();
+    mostrarInventarios();
+    actualizar();
+}
+
+// ACTUALIZACIÓN DINÁMICA
+
+function actualizar() {
+
+    const dinero = Number(document.getElementById("dinero").value) || 0;
+    const total = obtenerTotal();
+    const restante = dinero - total;
+
+    const cantidad = Object.keys(instaladas).filter(id => instaladas[id]).length;
+
+    document.getElementById("gastado").textContent = "$" + total;
+    document.getElementById("restante").textContent = "$" + restante;
+
+    const porcentajeGasto = dinero > 0
+        ? Math.min(total / dinero * 100, 100)
+        : 0;
+
+    document.getElementById("progreso").style.width = porcentajeGasto + "%";
+
+    const progresoMontaje = cantidad / partes.length * 100;
+
+    document.getElementById("porcentaje").textContent =
+        Math.round(progresoMontaje) + "% DE MONTAJE";
+
+    document.getElementById("cantidadPiezas").textContent =
+        cantidad + " / " + partes.length;
+
+    let detalle = "";
+
+    partes.forEach(parte => {
+        if (instaladas[parte.id]) {
+            detalle += `${parte.icono} ${parte.nombre}: $${parte.precio}<br>`;
+        }
+    });
+
+    carga.forEach(elemento => {
+        detalle += `${elemento.icono} ${elemento.nombre}: $${elemento.precio}<br>`;
+    });
+
+    document.getElementById("gastos").innerHTML =
+        detalle || "Todavía no hay gastos.";
+
+}
+
+// VERIFICAR COHETE
+
+function comprobarMontaje() {
+
+    const faltantes = partes.filter(parte => !instaladas[parte.id]);
+
+    if (faltantes.length > 0) {
+
+        document.getElementById("estado").innerHTML =
+            "⚠️ Faltan componentes: <b>" +
+            faltantes.map(x => x.nombre).join(", ") +
+            "</b>.";
+
+        mostrarAviso("Montaje incompleto.");
+        return;
+    }
+
+    document.getElementById("estado").innerHTML =
+        "✓ <b>¡VEHÍCULO COMPLETO!</b><br>" +
+        "Todos los componentes fueron instalados.<br>" +
+        "Herramientas cargadas: " + carga.length +
+        "<br>Presupuesto utilizado: $" + obtenerTotal();
+
+    mostrarAviso("🚀 ¡COHETE COMPLETADO!");
+}
+
+// AVISOS
+
+let avisoTemporizador;
+
+function mostrarAviso(mensaje) {
+
+    const aviso = document.getElementById("aviso");
+
+    aviso.textContent = mensaje;
+    aviso.classList.add("visible");
+
+    clearTimeout(avisoTemporizador);
+
+    avisoTemporizador = setTimeout(() => {
+        aviso.classList.remove("visible");
+    }, 2200);
+}
+
+// REINICIAR
+
+function reiniciar() {
+
+    if (!confirm("¿Querés reiniciar todo el montaje?")) return;
+
+    instaladas = {};
+    carga = [];
+
+    document.querySelectorAll(".zona").forEach(zona => {
+
+        zona.classList.remove("completa", "sobre");
+
+        zona.innerHTML = `
+            <span class="etiqueta">${nombresZonas[zona.dataset.tipo]}</span>
+        `;
+    });
+
+    document.getElementById("llama").style.display = "none";
+
+    document.getElementById("estado").innerHTML =
+        "Sistema reiniciado.<br>Esperando el montaje de los componentes.";
+
+    mostrarInventarios();
+    mostrarCarga();
+    actualizar();
+
+    mostrarAviso("Sistema reiniciado.");
+}
+
+const nombresZonas = {
+    punta: "PUNTA",
+    cabina: "CABINA",
+    tanque: "TANQUE",
+    alas: "ESTABILIZADORES",
+    motor: "MOTOR"
+};
+
+// INICIAR SISTEMA
+
+mostrarInventarios();
+mostrarCarga();
+actualizar();
+
+</script>
+
+</body>
+</html>
