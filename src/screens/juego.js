@@ -44,6 +44,24 @@ function lanzarTutorialCentro() {
       ) ?? null,
   });
 }
+function centrarArbol() {
+  const panel = document.querySelector('[data-juego-panel="misionTree"]');
+  if (!panel) return;
+  requestAnimationFrame(() => {
+    const tarjeta = [...panel.querySelectorAll("button, article, li, [role='button']")].find(
+      (e) => e.textContent.includes("Lanzamiento de un satélite"),
+    );
+    tarjeta?.scrollIntoView({ block: "center", inline: "center", behavior: "instant" });
+  });
+}
+function bajarAlDetalle() {
+  const panel = document.querySelector('[data-juego-panel="misionTree"]');
+  if (!panel) return;
+  setTimeout(() => {
+    const scroll = panel.closest(".juego-main") ?? panel.parentElement;
+    scroll?.scrollTo({ top: scroll.scrollHeight, behavior: "smooth" });
+  }, 150);
+}
 export default function configurarJuego({
   vistaInicial = "misionTree",
   categoriaInvestigacionInicial = "propulsion",
@@ -120,9 +138,11 @@ export default function configurarJuego({
 
     actualizarVistas[vista]?.();
     guardarVistaJuego(vista);
-    if (vista === "misionTree") lanzarTutorialCentro();
+       if (vista === "misionTree") {
+       centrarArbol();
+       lanzarTutorialCentro();
+    }
   }
-
   botonesVista.forEach((boton) => {
     boton.onclick = () => mostrarVista(boton.dataset.juegoVista);
   });
@@ -164,7 +184,12 @@ export default function configurarJuego({
     throw new Error("No se encontró el botón de información desbloqueada.");
   }
   btnInformacion.onclick = mostrarDialogoInformacion;
-
+   document.querySelector('[data-juego-panel="misionTree"]')
+    ?.addEventListener("click", (e) => {
+      if (e.target.closest("#nodos-misiones button, #nodos-misiones [role='button'], #nodos-misiones article, #nodos-misiones li")) {
+        bajarAlDetalle();
+      }
+    });
   mostrarVista(vistaInicial);
   actualizarHUD();
 }

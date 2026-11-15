@@ -1107,7 +1107,7 @@ body {
     min-height: 0;
     overflow-y: auto;
     gap: 16px;
-    grid-template-rows: 4rem 3rem minmax(0, 1fr) 2rem;
+    grid-template-rows: auto auto auto auto;
   }
 
   .taller-montaje-cabecera {
