@@ -1,0 +1,419 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #030712;
+  color: #ffffff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#dialog-global {
+  width: min(90vw, 420px);
+  padding: 0;
+  border: 1px solid rgba(75, 85, 99, 0.7);
+  border-radius: 12px;
+  background-color: #111827;
+  color: #ffffff;
+}
+
+#dialog-global::backdrop {
+  background: rgba(3, 7, 18, 0.75);
+  backdrop-filter: blur(4px);
+}
+
+.dialog-contenido {
+  padding: 24px;
+}
+
+.dialog-contenido h2 {
+  margin: 0 0 12px;
+  color: #f3f4f6;
+}
+
+.dialog-contenido p {
+  margin: 0;
+  color: #d1d5db;
+  line-height: 1.5;
+}
+
+.dialog-acciones {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+
+.dialog-acciones button {
+  padding: 9px 18px;
+  border: 1px solid #3b82f6;
+  border-radius: 6px;
+  background-color: #2563eb;
+  color: #ffffff;
+  font: inherit;
+  cursor: pointer;
+}
+
+/* Contenedor principal del menú */
+.menu-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* Título del juego */
+  #titulo-juego {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 2.5rem;
+    color: #f3f4f6;
+  }
+  
+  /* Navegación y botones principales */
+  #menu-principal {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 260px;
+    .btn-menu {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      padding: 12px 20px;
+      background-color: rgba(17, 24, 39, 0.8);
+      border: 1px solid rgba(75, 85, 99, 0.4);
+      color: #ffffff;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      backdrop-filter: blur(5px);
+  
+      &:hover {
+        background-color: #2563eb;
+        border-color: #3b82f6;
+        box-shadow: 0 0 15px rgba(37, 99, 235, 0.5);
+        transform: translateY(-2px);
+      }
+      
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
+  
+  /* Iconos en la inferior izquierda */
+  #esquina-izquierda {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    display: flex;
+    gap: 12px;
+    .btn-icono {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(17, 24, 39, 0.8);
+      border: 1px solid rgba(75, 85, 99, 0.4);
+      color: #ffffff;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      backdrop-filter: blur(5px);
+      &:hover {
+        background-color: #374151;
+        border-color: #9ca3af;
+        transform: scale(1.1);
+      }
+    }
+  }
+  
+  /* Texto en la esquina inferior derecha */
+  #esquina-derecha {
+    position: absolute;
+    bottom: 28px;
+    right: 28px;
+    color: #9ca3af;
+    font-size: 0.9rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+}
+
+/* Contenedor principal de slots */
+.slots-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at center, #111827 0%, #030712 100%);
+
+  /* Título de la pantalla de campañas */
+  #titulo-campanas {
+    font-size: 2.8rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    margin-bottom: 2rem;
+    color: #f3f4f6;
+    text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+  }
+
+  /* Lista de slots / campañas */
+  #lista-campanas {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 380px;
+    margin-bottom: 2rem;
+
+    .campana {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+
+      /* Botón principal del slot */
+      .campana-btn {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        flex: 1;
+        padding: 14px 20px;
+        background-color: rgba(17, 24, 39, 0.8);
+        border: 1px solid rgba(75, 85, 99, 0.4);
+        color: #ffffff;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+        backdrop-filter: blur(5px);
+        text-align: left;
+
+        .campana-icon {
+          font-size: 28px;
+          color: #3b82f6;
+        }
+
+        .campana-info {
+          display: flex;
+          flex-direction: column;
+          gap: 3px;
+
+          strong {
+            font-size: 1.1rem;
+            color: #f3f4f6;
+          }
+
+          .campana-estado {
+            font-size: 0.85rem;
+            color: #9ca3af;
+          }
+        }
+
+        &:hover:not(:disabled) {
+          background-color: #2563eb;
+          border-color: #3b82f6;
+          box-shadow: 0 0 15px rgba(37, 99, 235, 0.5);
+          transform: translateY(-2px);
+
+          .campana-icon, strong, .campana-estado {
+            color: #ffffff;
+          }
+        }
+
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+      }
+
+      /* Botón de borrar partida */
+      .btn-borrar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        background-color: rgba(17, 24, 39, 0.8);
+        border: 1px solid rgba(239, 68, 68, 0.4);
+        color: #ef4444;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+        backdrop-filter: blur(5px);
+
+        &:hover {
+          background-color: #ef4444;
+          border-color: #f87171;
+          color: #ffffff;
+          box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
+          transform: translateY(-2px);
+        }
+      }
+    }
+  }
+
+  /* Botón Volver reutilizando la estética de .btn-menu */
+  #btn-campanas-volver {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 380px;
+    padding: 12px 20px;
+    background-color: rgba(17, 24, 39, 0.8);
+    border: 1px solid rgba(75, 85, 99, 0.4);
+    color: #ffffff;
+    font-size: 1.05rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    backdrop-filter: blur(5px);
+
+    &:hover {
+      background-color: #374151;
+      border-color: #9ca3af;
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Contenedor principal de la pantalla de misiones/nodos */
+.mision-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(circle at center, #111827 0%, #030712 100%);
+  color: #ffffff;
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  .mision-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    background-color: rgba(17, 24, 39, 0.9);
+    border-bottom: 1px solid rgba(75, 85, 99, 0.4);
+    backdrop-filter: blur(5px);
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #f3f4f6;
+      margin: 0;
+    }
+
+    .recursos-hud {
+      display: flex;
+      gap: 20px;
+      font-size: 1.1rem;
+      font-weight: 600;
+
+      .recurso-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: #38bdf8;
+
+        span.material-symbols-outlined {
+          font-size: 20px;
+        }
+      }
+    }
+  }
+
+  /* Área visual del mapa de nodos */
+  .mapa-nodos-wrapper {
+    position: relative;
+    flex: 1;
+    width: 100%;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 40px 40px;
+
+    .nodo-estelar {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+
+      .nodo-icon {
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(17, 24, 39, 0.9);
+        border: 2px solid #3b82f6;
+        color: #3b82f6;
+        border-radius: 50%;
+        font-size: 24px;
+        box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+        transition: all 0.2s ease-in-out;
+      }
+
+      .nodo-nombre {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #9ca3af;
+        background-color: rgba(3, 7, 18, 0.8);
+        padding: 2px 8px;
+        border-radius: 4px;
+        white-space: nowrap;
+      }
+
+      &.desbloqueado, &.disponible {
+        &:hover {
+          transform: translate(-50%, -50%) scale(1.1);
+          .nodo-icon {
+            background-color: #2563eb;
+            border-color: #60a5fa;
+            color: #ffffff;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.8);
+          }
+          .nodo-nombre {
+            color: #ffffff;
+          }
+        }
+      }
+
+      &.bloqueado {
+        opacity: 0.4;
+        cursor: not-allowed;
+        .nodo-icon {
+          border-color: #4b5563;
+          color: #4b5563;
+          box-shadow: none;
+        }
+      }
+    }
+  }
+
+  .mision-footer {
+    padding: 15px;
+    text-align: center;
+    background-color: rgba(17, 24, 39, 0.8);
+    border-top: 1px solid rgba(75, 85, 99, 0.4);
+    font-size: 0.9rem;
+    color: #9ca3af;
+  }
+}

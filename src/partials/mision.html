@@ -1,0 +1,34 @@
+<div class="mision-container">
+  <header class="mision-header">
+    <button id="btn-mision-volver" class="btn-icono" title="Volver al menú" aria-label="Volver">
+      <span class="material-symbols-outlined">arrow_back</span>
+    </button>
+    <h2>Mapa de Misiones / Nodos</h2>
+    <div class="recursos-hud">
+      <span class="recurso-item"><span class="material-symbols-outlined">savings</span> <span id="hud-presupuesto">1000</span></span>
+      <span class="recurso-item"><span class="material-symbols-outlined">science</span> <span id="hud-ciencia">0</span></span>
+    </div>
+  </header>
+
+  <div class="mapa-nodos-wrapper">
+    <!-- Red de nodos interactivos (puedes ajustar o generar dinámicamente) -->
+    <div class="nodo-estelar desbloqueado" data-nodo="tierra" style="top: 70%; left: 20%;">
+      <span class="material-symbols-outlined nodo-icon">public</span>
+      <span class="nodo-nombre">Tierra (Base)</span>
+    </div>
+
+    <div class="nodo-estelar disponible" data-nodo="luna" style="top: 45%; left: 45%;">
+      <span class="material-symbols-outlined nodo-icon">satellite_alt</span>
+      <span class="nodo-nombre">Órbita Lunar</span>
+    </div>
+
+    <div class="nodo-estelar bloqueado" data-nodo="marte" style="top: 30%; left: 75%;">
+      <span class="material-symbols-outlined nodo-icon">rocket</span>
+      <span class="nodo-nombre">Marte</span>
+    </div>
+  </div>
+
+  <footer class="mision-footer">
+    <p>Haz clic en un nodo disponible para iniciar la misión.</p>
+  </footer>
+</div>
