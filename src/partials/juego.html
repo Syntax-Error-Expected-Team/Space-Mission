@@ -35,61 +35,13 @@
   </header>
 
   <main class="juego-main" aria-live="polite">
-    <section class="juego-panel" data-juego-panel="base">
-      <p class="juego-etiqueta">ESTADO DE LA MISIÓN</p>
-      <h2>Operaciones espaciales</h2>
-      <p class="juego-descripcion">
-        Gestiona los recursos de la misión y prepara el próximo turno.
-      </p>
-      <div class="juego-tarjeta">
-        <span
-          class="material-symbols-outlined"
-          id="nodo-actual-icon"
-          aria-hidden="true"
-          >public</span
-        >
-        <div>
-          <span>Mission actual</span>
-          <strong id="juego-nodo-actual">Tierra</strong>
-        </div>
-      </div>
-    </section>
-
-    <section class="juego-panel" data-juego-panel="taller" hidden>
-      <p class="juego-etiqueta">INFRAESTRUCTURA</p>
-      <h2>Taller</h2>
-      <p class="juego-descripcion">
-        Prepara y mejora el equipamiento para futuras misiones.
-      </p>
-      <div id="taller-contenido"></div>
-    </section>
-
-    <section class="juego-panel" data-juego-panel="investigacion" hidden>
-      <p class="juego-etiqueta">PROGRESO CIENTÍFICO</p>
-      <h2>Árbol de investigación</h2>
-      <p class="juego-descripcion">
-        Desbloquea tecnologías conectadas usando tus puntos de investigación.
-      </p>
-      <div class="investigacion-mapa">
-        <svg
-          class="investigacion-conexiones"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-          aria-hidden="true"
-          focusable="false"
-        >
-          <g id="conexiones-investigacion"></g>
-        </svg>
-        <div id="nodos-investigacion"></div>
-      </div>
-      <p
-        id="investigacion-mensaje"
-        class="investigacion-mensaje"
-        aria-live="polite"
-      >
-        Selecciona un nodo conectado para investigar.
-      </p>
-    </section>
+    <section class="juego-panel" data-juego-panel="misionTree"></section>
+    <section class="juego-panel" data-juego-panel="taller" hidden></section>
+    <section
+      class="juego-panel"
+      data-juego-panel="investigacion"
+      hidden
+    ></section>
   </main>
 
   <aside class="juego-sidebar">
@@ -106,11 +58,11 @@
     <div>
       <p class="juego-etiqueta">NAVEGACIÓN</p>
       <nav class="juego-nav" aria-label="Secciones del centro de mando">
-        <button type="button" data-juego-vista="base" aria-current="page">
+        <button type="button" data-juego-vista="misionTree" aria-current="page">
           <span class="material-symbols-outlined" aria-hidden="true"
             >dashboard</span
           >
-          Base
+          Misiones
         </button>
         <button type="button" data-juego-vista="taller">
           <span class="material-symbols-outlined" aria-hidden="true"
@@ -122,7 +74,7 @@
           <span class="material-symbols-outlined" aria-hidden="true"
             >account_tree</span
           >
-          Investigación
+          Desarollo
         </button>
       </nav>
       <button id="btn-misiones-volver" class="btn-icono btn-sidebar">
@@ -132,7 +84,7 @@
   </aside>
 
   <footer class="juego-turno">
-    <div>
+    <div class="juego-turno-info">
       <span>Mes actual</span>
       <strong id="juego-turno">1</strong>
     </div>

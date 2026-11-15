@@ -8,6 +8,7 @@ export const INGRESO_MENSUAL = {
   ciencia: 20,
 };
 export const INVESTIGACION_INICIAL = "fundamentos_cientificos";
+export const MISION_INICIAL = "lanzamiento_satelite";
 
 const opcionesPorDefecto = { musica: true, volumen: 50 };
 
@@ -75,6 +76,7 @@ export class GameStateManager {
       presupuesto: 1000,
       ciencia: 0,
       investigacionesCompletadas: [INVESTIGACION_INICIAL],
+      misionActual: MISION_INICIAL,
       nodoActual: "tierra",
       completados: [],
       desbloqueados: ["tierra"],

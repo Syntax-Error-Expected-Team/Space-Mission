@@ -1,11 +1,12 @@
 import gameState, { INGRESO_MENSUAL } from "../game-state.js";
-import inicializarBase from "./juego/base.js";
+import inicializarBase from "./juego/misionTree.js";
 import inicializarTaller from "./juego/taller.js";
 import inicializarInvestigacion from "./juego/investigacion.js";
 import { guardarVistaJuego } from "../navigation-state.js";
 
 export default function configurarJuego({
-  vistaInicial = "base",
+  vistaInicial = "misionTree",
+  categoriaInvestigacionInicial = "propulsion",
   onVolver,
 } = {}) {
   const paneles = document.querySelectorAll("[data-juego-panel]");
@@ -43,10 +44,11 @@ export default function configurarJuego({
   }
 
   const actualizarVistas = {
-    base: inicializarBase(),
+    misionTree: inicializarBase(),
     taller: inicializarTaller(),
     investigacion: inicializarInvestigacion({
       onResourcesChanged: actualizarHUD,
+      categoriaInicial: categoriaInvestigacionInicial,
     }),
   };
 

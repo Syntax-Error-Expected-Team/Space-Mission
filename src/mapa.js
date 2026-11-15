@@ -49,7 +49,6 @@ export function detenerMapa() {
 function renderizarMapa() {
   if (!container) return;
 
-  // Estructura base limpia dentro del contenedor
   container.innerHTML = `
     <svg class="mapa-conexiones" width="100%" height="100%">
       ${CONEXIONES.map(([ida, idb]) => {
