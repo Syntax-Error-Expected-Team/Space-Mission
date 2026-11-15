@@ -11,21 +11,16 @@
   </header>
 
   <div class="mapa-nodos-wrapper">
-    <!-- Red de nodos interactivos (puedes ajustar o generar dinámicamente) -->
-    <div class="nodo-estelar desbloqueado" data-nodo="tierra" style="top: 70%; left: 20%;">
-      <span class="material-symbols-outlined nodo-icon">public</span>
-      <span class="nodo-nombre">Tierra (Base)</span>
-    </div>
-
-    <div class="nodo-estelar disponible" data-nodo="luna" style="top: 45%; left: 45%;">
-      <span class="material-symbols-outlined nodo-icon">satellite_alt</span>
-      <span class="nodo-nombre">Órbita Lunar</span>
-    </div>
-
-    <div class="nodo-estelar bloqueado" data-nodo="marte" style="top: 30%; left: 75%;">
-      <span class="material-symbols-outlined nodo-icon">rocket</span>
-      <span class="nodo-nombre">Marte</span>
-    </div>
+    <svg
+      class="mapa-conexiones"
+      viewBox="0 0 100 100"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <g id="conexiones-nodos"></g>
+    </svg>
+    <div id="mapa-nodos"></div>
   </div>
 
   <footer class="mision-footer">
