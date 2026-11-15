@@ -1,12 +1,27 @@
 <div class="mision-container">
   <header class="mision-header">
-    <button id="btn-mision-volver" class="btn-icono" title="Volver al menú" aria-label="Volver">
-      <span class="material-symbols-outlined">arrow_back</span>
-    </button>
     <h2>Mapa de Misiones / Nodos</h2>
-    <div class="recursos-hud">
-      <span class="recurso-item"><span class="material-symbols-outlined">savings</span> <span id="hud-presupuesto">1000</span></span>
-      <span class="recurso-item"><span class="material-symbols-outlined">science</span> <span id="hud-ciencia">0</span></span>
+    <div class="recursos-hud" aria-label="Recursos e ingresos mensuales">
+      <div class="recurso-item">
+        <span class="material-symbols-outlined" aria-hidden="true"
+          >savings</span
+        >
+        <span class="recurso-detalles">
+          <span> $<span id="hud-presupuesto">1000</span> </span>
+          <small>+$<span id="hud-ingreso-presupuesto">250</span></small>
+        </span>
+      </div>
+      <div class="recurso-item">
+        <span class="material-symbols-outlined" aria-hidden="true"
+          >science</span
+        >
+        <span class="recurso-detalles">
+          <span>
+            <span id="hud-ciencia">0</span>
+          </span>
+          <small>+<span id="hud-ingreso-ciencia">20</span> pts</small>
+        </span>
+      </div>
     </div>
   </header>
 
@@ -24,6 +39,14 @@
   </div>
 
   <footer class="mision-footer">
+    <button
+      id="btn-mision-volver"
+      class="btn-icono volver-btn"
+      title="Volver al menú"
+      aria-label="Volver"
+    >
+      <span class="material-symbols-outlined">arrow_back</span>
+    </button>
     <p>Haz clic en un nodo disponible para iniciar la misión.</p>
   </footer>
 </div>

@@ -1,0 +1,48 @@
+<p class="juego-etiqueta">PROGRESO CIENTÍFICO</p>
+<h2>Desarrollo de tecnologías</h2>
+<p class="juego-descripcion">
+  Desbloquea tecnologías conectadas usando tus puntos de investigación.
+</p>
+<nav
+  class="investigacion-categorias"
+  aria-label="Categorías de investigación"
+>
+  <button
+    type="button"
+    data-investigacion-categoria="propulsion"
+    aria-current="page"
+  >
+    Propulsión
+  </button>
+  <button type="button" data-investigacion-categoria="combustible">
+    Combustible y almacenamiento
+  </button>
+  <button type="button" data-investigacion-categoria="control">
+    Sistemas de control
+  </button>
+  <button type="button" data-investigacion-categoria="carga-util">
+    Carga útil
+  </button>
+  <button type="button" data-investigacion-categoria="estructura">
+    Estructura
+  </button>
+</nav>
+<div class="investigacion-mapa">
+  <svg
+    class="investigacion-conexiones"
+    viewBox="0 0 100 100"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <g id="conexiones-investigacion"></g>
+  </svg>
+  <div id="nodos-investigacion"></div>
+</div>
+<p
+  id="investigacion-mensaje"
+  class="investigacion-mensaje"
+  aria-live="polite"
+>
+  Selecciona un nodo conectado para investigar.
+</p>

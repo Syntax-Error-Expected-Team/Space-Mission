@@ -3,6 +3,13 @@ const CLAVE_ULTIMO_SLOT = "spaceMission:ultimoSlot";
 const CLAVE_OPCIONES = "spaceMission:opciones";
 const claveSlot = (n) => `spaceMission:partida:${n}`;
 
+export const INGRESO_MENSUAL = {
+  presupuesto: 250,
+  ciencia: 20,
+};
+export const INVESTIGACION_INICIAL = "fundamentos_cientificos";
+export const MISION_INICIAL = "lanzamiento_satelite";
+
 const opcionesPorDefecto = { musica: true, volumen: 50 };
 
 export class GameStateManager {
@@ -65,9 +72,11 @@ export class GameStateManager {
     const slotObjeto = {
       idSlot: n,
       creado: Date.now(),
-      dia: 1,
+      mes: 1,
       presupuesto: 1000,
       ciencia: 0,
+      investigacionesCompletadas: [INVESTIGACION_INICIAL],
+      misionActual: MISION_INICIAL,
       nodoActual: "tierra",
       completados: [],
       desbloqueados: ["tierra"],

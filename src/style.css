@@ -3,7 +3,7 @@ body {
   padding: 0;
   background-color: #030712;
   color: #ffffff;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   height: 100vh;
   overflow: hidden;
 }
@@ -69,7 +69,7 @@ body {
     margin-bottom: 2.5rem;
     color: #f3f4f6;
   }
-  
+
   /* Navegación y botones principales */
   #menu-principal {
     display: flex;
@@ -91,20 +91,20 @@ body {
       cursor: pointer;
       transition: all 0.2s ease-in-out;
       backdrop-filter: blur(5px);
-  
+
       &:hover {
         background-color: #2563eb;
         border-color: #3b82f6;
         box-shadow: 0 0 15px rgba(37, 99, 235, 0.5);
         transform: translateY(-2px);
       }
-      
+
       &:active {
         transform: translateY(0);
       }
     }
   }
-  
+
   /* Iconos en la inferior izquierda */
   #esquina-izquierda {
     position: absolute;
@@ -112,6 +112,21 @@ body {
     left: 24px;
     display: flex;
     gap: 12px;
+  }
+
+  /* Texto en la esquina inferior derecha */
+  #esquina-derecha {
+    position: absolute;
+    bottom: 28px;
+    right: 28px;
+    color: #9ca3af;
+    font-size: 0.9rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+}
+
     .btn-icono {
       width: 44px;
       height: 44px;
@@ -131,20 +146,6 @@ body {
         transform: scale(1.1);
       }
     }
-  }
-  
-  /* Texto en la esquina inferior derecha */
-  #esquina-derecha {
-    position: absolute;
-    bottom: 28px;
-    right: 28px;
-    color: #9ca3af;
-    font-size: 0.9rem;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    font-weight: 500;
-  }
-}
 
 /* Contenedor principal de slots */
 .slots-container {
@@ -224,7 +225,9 @@ body {
           box-shadow: 0 0 15px rgba(37, 99, 235, 0.5);
           transform: translateY(-2px);
 
-          .campana-icon, strong, .campana-estado {
+          .campana-icon,
+          strong,
+          .campana-estado {
             color: #ffffff;
           }
         }
@@ -301,7 +304,7 @@ body {
   background: radial-gradient(circle at center, #111827 0%, #030712 100%);
   color: #ffffff;
   overflow: hidden;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 
   .mision-header {
     display: flex;
@@ -328,11 +331,25 @@ body {
       .recurso-item {
         display: flex;
         align-items: center;
-        gap: 6px;
+        gap: 8px;
         color: #38bdf8;
 
         span.material-symbols-outlined {
-          font-size: 20px;
+          font-size: 25px;
+        }
+
+        .recurso-detalles {
+          display: flex;
+          flex-direction: column;
+          gap: 3px;
+          color: #f3f4f6;
+          font-size: 1rem;
+        }
+
+        small {
+          color: #9ca3af;
+          font-size: 0.8rem;
+          font-weight: 400;
         }
       }
     }
@@ -343,7 +360,10 @@ body {
     position: relative;
     flex: 1;
     width: 100%;
-    background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-image: radial-gradient(
+      rgba(255, 255, 255, 0.1) 1px,
+      transparent 1px
+    );
     background-size: 40px 40px;
 
     .mapa-conexiones {
@@ -405,7 +425,8 @@ body {
         white-space: nowrap;
       }
 
-      &.desbloqueado, &.disponible {
+      &.desbloqueado,
+      &.disponible {
         &:hover {
           transform: translate(-50%, -50%) scale(1.1);
           .nodo-icon {
@@ -438,20 +459,45 @@ body {
     border-top: 1px solid rgba(75, 85, 99, 0.4);
     font-size: 0.9rem;
     color: #9ca3af;
+    position: relative;
+    .volver-btn {
+      position: absolute;
+    }
   }
 }
 
 .juego-container {
   display: grid;
-  grid-template-columns: 270px minmax(0, 1fr) 230px;
-  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-columns: 270px minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr) auto;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
   background:
-    radial-gradient(ellipse at 30% 45%, rgba(30, 64, 115, 0.3), transparent 55%),
+    radial-gradient(
+      ellipse at 30% 45%,
+      rgba(30, 64, 115, 0.3),
+      transparent 55%
+    ),
     #030712;
   color: #f3f4f6;
+  transition: grid-template-columns 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &.sidebar-colapsada {
+    grid-template-columns: 24px minmax(0, 1fr);
+
+    .juego-sidebar {
+      padding-inline: 12px;
+
+      > div {
+        display: none;
+      }
+
+      .btn-toggle-sidebar .material-symbols-outlined {
+        transform: rotate(180deg);
+      }
+    }
+  }
 
   .juego-header {
     grid-column: 1 / -1;
@@ -459,8 +505,8 @@ body {
     align-items: center;
     justify-content: space-between;
     gap: 24px;
-    min-height: 92px;
-    padding: 16px 28px;
+    min-height: 70px;
+    padding: 5px 21px;
     border-bottom: 1px solid rgba(75, 85, 99, 0.45);
     background: rgba(17, 24, 39, 0.9);
   }
@@ -521,6 +567,11 @@ body {
       gap: 3px;
     }
 
+    small {
+      color: #9ca3af;
+      font-size: 0.72rem;
+    }
+
     span:not(.material-symbols-outlined) {
       color: #9ca3af;
       font-size: 0.75rem;
@@ -536,7 +587,9 @@ body {
     grid-column: 2;
     grid-row: 2;
     min-width: 0;
+    min-height: 0;
     overflow: auto;
+    overscroll-behavior: contain;
     padding: clamp(24px, 2vw, 64px);
   }
 
@@ -592,9 +645,304 @@ body {
     }
   }
 
+  .misiones-arbol-scroll {
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 12px;
+  }
+
+  .misiones-arbol {
+    position: relative;
+    height: 570px;
+    overflow: hidden;
+    border: 1px solid rgba(75, 85, 99, 0.45);
+    border-radius: 12px;
+    background:
+      radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+      rgba(17, 24, 39, 0.45);
+    background-size: 32px 32px;
+  }
+
+  .misiones-conexiones {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+
+    .mision-conexion {
+      stroke-width: 1.2;
+      vector-effect: non-scaling-stroke;
+    }
+
+    .mision-conexion-principal {
+      stroke: rgba(96, 165, 250, 0.75);
+    }
+
+    .mision-conexion-secundaria {
+      stroke: rgba(167, 139, 250, 0.65);
+    }
+  }
+
+  #nodos-misiones {
+    position: absolute;
+    inset: 0;
+  }
+
+  .mision-nodo {
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 150px;
+    min-height: 112px;
+    padding: 10px;
+    transform: translate(-50%, -50%);
+    border: 1px solid rgba(75, 85, 99, 0.8);
+    border-radius: 10px;
+    background: #111827;
+    color: #e5e7eb;
+    font: inherit;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+
+    &:hover,
+    &:focus-visible {
+      background: #1f2937;
+      border-color: #93c5fd;
+    }
+
+    &:focus-visible {
+      outline: 2px solid #93c5fd;
+      outline-offset: 3px;
+    }
+
+    &.mision-principal {
+      border-top: 3px solid #3b82f6;
+    }
+
+    &.mision-secundaria {
+      border-top: 3px solid #8b5cf6;
+    }
+
+    &.mision-nodo-actual {
+      border-color: #facc15;
+      background: rgba(113, 63, 18, 0.85);
+      box-shadow: 0 0 18px rgba(250, 204, 21, 0.25);
+    }
+
+    .mision-nodo-icono {
+      color: #93c5fd;
+      font-size: 23px;
+    }
+
+    .mision-nodo-tipo {
+      color: #a5b4fc;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .mision-nodo-label {
+      font-size: 0.78rem;
+      line-height: 1.25;
+    }
+  }
+
+  .mision-actual {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    margin-top: 16px;
+    padding: 16px 20px;
+    border: 1px solid rgba(75, 85, 99, 0.5);
+    border-radius: 10px;
+    background: rgba(17, 24, 39, 0.75);
+
+    .juego-etiqueta {
+      margin-bottom: 6px;
+    }
+
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h3 {
+      color: #f9fafb;
+      font-size: 1.05rem;
+    }
+
+    #mision-actual-descripcion {
+      margin-top: 6px;
+      color: #9ca3af;
+      line-height: 1.45;
+    }
+
+    .mision-actual-mensaje {
+      max-width: 300px;
+      color: #cbd5e1;
+      font-size: 0.85rem;
+      line-height: 1.4;
+      text-align: right;
+    }
+  }
+
+  .taller-estado-vacio {
+    max-width: 560px;
+    color: #cbd5e1;
+
+    p {
+      margin: 0;
+      line-height: 1.5;
+    }
+  }
+
+  .investigacion-categorias {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(120px, 1fr));
+    gap: 8px;
+    min-width: 680px;
+    margin-bottom: 16px;
+
+    button {
+      min-height: 44px;
+      padding: 8px 10px;
+      border: 1px solid rgba(75, 85, 99, 0.65);
+      border-radius: 7px;
+      background: rgba(17, 24, 39, 0.8);
+      color: #cbd5e1;
+      font: inherit;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: border-color 0.2s ease, background-color 0.2s ease;
+
+      &:hover,
+      &[aria-current="page"] {
+        border-color: #3b82f6;
+        background: rgba(37, 99, 235, 0.2);
+        color: #ffffff;
+      }
+
+      &:focus-visible {
+        outline: 2px solid #93c5fd;
+        outline-offset: 2px;
+      }
+    }
+  }
+
+  .investigacion-mapa {
+    position: relative;
+    width: 100%;
+    min-width: 680px;
+    min-height: 500px;
+    overflow: hidden;
+    border: 1px solid rgba(75, 85, 99, 0.45);
+    border-radius: 12px;
+    background:
+      radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+      rgba(17, 24, 39, 0.45);
+    background-size: 32px 32px;
+  }
+
+  .investigacion-conexiones {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+
+    .investigacion-conexion {
+      stroke: rgba(96, 165, 250, 0.5);
+      stroke-width: 1.2;
+      vector-effect: non-scaling-stroke;
+    }
+  }
+
+  #nodos-investigacion {
+    position: absolute;
+    inset: 0;
+  }
+
+  .investigacion-nodo {
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    width: 142px;
+    min-height: 116px;
+    padding: 12px 10px;
+    transform: translate(-50%, -50%);
+    border: 1px solid rgba(75, 85, 99, 0.8);
+    border-radius: 10px;
+    background: #111827;
+    color: #d1d5db;
+    font: inherit;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+
+    &:focus-visible {
+      outline: 2px solid #93c5fd;
+      outline-offset: 3px;
+    }
+
+    &.investigacion-completada {
+      border-color: #22c55e;
+      background: rgba(20, 83, 45, 0.9);
+      color: #f0fdf4;
+    }
+
+    &.investigacion-disponible {
+      border-color: #3b82f6;
+
+      &:hover {
+        background: rgba(30, 64, 115, 0.95);
+      }
+    }
+
+    &.investigacion-insuficiente {
+      border-color: #f59e0b;
+      color: #fde68a;
+    }
+
+    &.investigacion-bloqueada {
+      opacity: 0.55;
+    }
+
+    .investigacion-nodo-icono {
+      color: #60a5fa;
+      font-size: 24px;
+    }
+
+    .investigacion-nodo-nombre {
+      font-size: 0.82rem;
+      line-height: 1.25;
+    }
+
+    .investigacion-nodo-costo {
+      color: #9ca3af;
+      font-size: 0.72rem;
+    }
+  }
+
+  .investigacion-mensaje {
+    min-height: 1.5em;
+    margin: 12px 0 0;
+    color: #cbd5e1;
+    font-size: 0.9rem;
+  }
+
   .juego-sidebar {
     grid-column: 1;
-    grid-row: 2;
+    grid-row: 2 / 4;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -603,6 +951,47 @@ body {
     padding: 28px 18px 20px;
     border-right: 1px solid rgba(75, 85, 99, 0.45);
     background: rgba(17, 24, 39, 0.78);
+    position: relative;
+
+    .btn-sidebar {
+      bottom: 2%;
+      position: absolute;
+    }
+
+    .btn-toggle-sidebar {
+      position: absolute;
+      top: 50%;
+      right: -14px;
+      transform: translateY(-50%);
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      padding: 0;
+      border: 1px solid rgba(75, 85, 99, 0.65);
+      border-radius: 50%;
+      background: #111827;
+      color: #cbd5e1;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
+      transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+
+      &:hover {
+        background: #1f2937;
+        border-color: #60a5fa;
+        color: #ffffff;
+      }
+
+      .material-symbols-outlined {
+        font-size: 18px;
+        transition: transform 0.25s ease;
+      }
+    }
   }
 
   .juego-nav {
@@ -623,7 +1012,9 @@ body {
       font: inherit;
       text-align: left;
       cursor: pointer;
-      transition: background-color 0.2s ease, color 0.2s ease;
+      transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
 
       &:hover,
       &[aria-current="page"] {
@@ -640,21 +1031,27 @@ body {
   }
 
   .juego-turno {
-    grid-column: 3;
-    grid-row: 2;
-    align-self: end;
+    grid-column: 2;
+    grid-row: 3;
+    align-self: stretch;
     display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
     gap: 12px;
-    margin: 24px 18px;
-    padding: 16px 0 0;
-    border-top: 1px solid rgba(75, 85, 99, 0.45);
+    margin: 0 18px 16px;
+    padding: 16px;
+    border: 1px solid rgba(75, 85, 99, 0.55);
+    border-radius: 10px;
+    background: rgba(17, 24, 39, 0.9);
+    z-index: 1;
 
-    > div {
+    .juego-turno-info {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-end;
       color: #9ca3af;
       font-size: 0.88rem;
+      gap: 6px;
     }
 
     strong {
@@ -667,7 +1064,8 @@ body {
       align-items: center;
       justify-content: center;
       gap: 8px;
-      width: 100%;
+      width: auto;
+      min-width: 150px;
       padding: 11px 12px;
       border: 1px solid #3b82f6;
       border-radius: 7px;
@@ -712,6 +1110,8 @@ body {
     .juego-main {
       grid-column: 1;
       grid-row: 2;
+      min-height: 0;
+      overflow: auto;
       padding: 28px 20px;
     }
 
@@ -753,8 +1153,6 @@ body {
       grid-column: 1;
       grid-row: 4;
       justify-self: end;
-      grid-template-columns: 1fr auto;
-      align-items: center;
       width: min(100% - 32px, 320px);
       margin: 0 16px 12px;
       padding-top: 10px;

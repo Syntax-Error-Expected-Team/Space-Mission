@@ -1,7 +1,9 @@
 <div class="juego-container">
   <header class="juego-header">
     <div class="juego-identidad">
-      <span class="material-symbols-outlined" aria-hidden="true">rocket_launch</span>
+      <span class="material-symbols-outlined" aria-hidden="true"
+        >rocket_launch</span
+      >
       <div>
         <p>SPACE MISSION</p>
         <h1>Centro de mando</h1>
@@ -10,85 +12,87 @@
 
     <div class="juego-recursos" aria-label="Recursos de la misión">
       <div class="juego-recurso">
-        <span class="material-symbols-outlined" aria-hidden="true">savings</span>
+        <span class="material-symbols-outlined" aria-hidden="true"
+          >savings</span
+        >
         <div>
           <span>Presupuesto</span>
           <strong>$<span id="juego-presupuesto">0</span></strong>
+          <small>+$<span id="juego-ingreso-presupuesto">250</span></small>
         </div>
       </div>
       <div class="juego-recurso">
-        <span class="material-symbols-outlined" aria-hidden="true">science</span>
+        <span class="material-symbols-outlined" aria-hidden="true"
+          >science</span
+        >
         <div>
           <span>Puntos de investigación</span>
           <strong id="juego-ciencia">0</strong>
+          <small>+<span id="juego-ingreso-ciencia">20</span> pts</small>
         </div>
       </div>
     </div>
   </header>
 
   <main class="juego-main" aria-live="polite">
-    <section class="juego-panel" data-juego-panel="base">
-      <p class="juego-etiqueta">ESTADO DE LA MISIÓN</p>
-      <h2>Operaciones espaciales</h2>
-      <p class="juego-descripcion">
-        Gestiona los recursos de la misión y prepara el próximo turno.
-      </p>
-      <div class="juego-tarjeta">
-        <span class="material-symbols-outlined" id="nodo-actual-icon" aria-hidden="true">public</span>
-        <div>
-          <span>Mission actual</span>
-          <strong id="juego-nodo-actual">Tierra</strong>
-        </div>
-      </div>
-    </section>
-
-    <section class="juego-panel" data-juego-panel="taller" hidden>
-      <p class="juego-etiqueta">INFRAESTRUCTURA</p>
-      <h2>Taller</h2>
-      <p class="juego-descripcion">
-        Prepara y mejora el equipamiento para futuras misiones.
-      </p>
-     
-    </section>
-
-    <section class="juego-panel" data-juego-panel="investigacion" hidden>
-      <p class="juego-etiqueta">PROGRESO CIENTÍFICO</p>
-      <h2>Árbol de investigación</h2>
-      <p class="juego-descripcion">
-        Consulta las etapas de desarrollo tecnológico de la misión.
-      </p>
-    
-    </section>
+    <section class="juego-panel" data-juego-panel="misionTree"></section>
+    <section class="juego-panel" data-juego-panel="taller" hidden></section>
+    <section
+      class="juego-panel"
+      data-juego-panel="investigacion"
+      hidden
+    ></section>
   </main>
 
   <aside class="juego-sidebar">
+    <button
+      type="button"
+      id="btn-toggle-sidebar"
+      class="btn-toggle-sidebar"
+      aria-label="Colapsar barra lateral"
+      aria-expanded="true"
+    >
+      <span class="material-symbols-outlined" aria-hidden="true">chevron_left</span>
+    </button>
+    
     <div>
       <p class="juego-etiqueta">NAVEGACIÓN</p>
       <nav class="juego-nav" aria-label="Secciones del centro de mando">
-        <button type="button" data-juego-vista="base" aria-current="page">
-          <span class="material-symbols-outlined" aria-hidden="true">dashboard</span>
-          Base
+        <button type="button" data-juego-vista="misionTree" aria-current="page">
+          <span class="material-symbols-outlined" aria-hidden="true"
+            >dashboard</span
+          >
+          Misiones
         </button>
         <button type="button" data-juego-vista="taller">
-          <span class="material-symbols-outlined" aria-hidden="true">build</span>
+          <span class="material-symbols-outlined" aria-hidden="true"
+            >build</span
+          >
           Taller
         </button>
         <button type="button" data-juego-vista="investigacion">
-          <span class="material-symbols-outlined" aria-hidden="true">account_tree</span>
-          Investigación
+          <span class="material-symbols-outlined" aria-hidden="true"
+            >account_tree</span
+          >
+          Desarollo
         </button>
       </nav>
+      <button id="btn-misiones-volver" class="btn-icono btn-sidebar">
+        <span class="material-symbols-outlined">arrow_back</span>
+      </button>
     </div>
   </aside>
 
   <footer class="juego-turno">
-    <div>
-      <span>Turno actual</span>
+    <div class="juego-turno-info">
+      <span>Mes actual</span>
       <strong id="juego-turno">1</strong>
     </div>
     <button id="btn-pasar-turno" type="button">
-      Pasar turno
-      <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+      Pasar Mes
+      <span class="material-symbols-outlined" aria-hidden="true"
+        >arrow_forward</span
+      >
     </button>
   </footer>
 </div>

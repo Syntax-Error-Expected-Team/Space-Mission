@@ -1,0 +1,32 @@
+<p class="juego-etiqueta">CAMPAÑA ESPACIAL</p>
+<h2>Árbol de misiones</h2>
+<p class="juego-descripcion">
+  Selecciona la misión que quieres tener activa. Las conexiones muestran la
+  rama principal y las misiones secundarias.
+</p>
+
+<div class="misiones-arbol-scroll">
+  <div class="misiones-arbol">
+    <svg
+      class="misiones-conexiones"
+      viewBox="0 0 100 100"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <g id="conexiones-misiones"></g>
+    </svg>
+    <div id="nodos-misiones"></div>
+  </div>
+</div>
+
+<section class="mision-actual" aria-live="polite">
+  <div>
+    <p class="juego-etiqueta">MISIÓN ACTUAL</p>
+    <h3 id="mision-actual-titulo">Lanzamiento de un satélite artificial</h3>
+    <p id="mision-actual-descripcion"></p>
+  </div>
+  <p id="mision-actual-mensaje" class="mision-actual-mensaje">
+    Haz clic en una misión para seleccionarla.
+  </p>
+</section>
