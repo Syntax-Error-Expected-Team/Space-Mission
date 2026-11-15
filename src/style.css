@@ -1164,7 +1164,6 @@ body {
   }
 }
 
-/* ==================== ESTILOS PARA INPUTS DE DIÁLOGOS DINÁMICOS ==================== */
 .dialog-inputs {
   display: flex;
   flex-direction: column;
@@ -1225,7 +1224,6 @@ body {
   }
 }
 
-/* Estilo especial en fila para los checkboxes (opciones como activar/desactivar música) */
 .dialog-input-group:has(input[type="checkbox"]) {
   flex-direction: row;
   align-items: center;
@@ -1249,4 +1247,163 @@ body {
     accent-color: #2563eb;
     cursor: pointer;
   }
+}
+
+#modal-tareas {
+  width: min(560px, 92vw);
+  padding: 0;
+  border: 2px solid #4fd0ff;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #0f1b30, #080d18);
+  color: #e6f1ff;
+  box-shadow: 0 0 28px rgba(79, 208, 255, 0.35);
+  font-family: system-ui, sans-serif;
+}
+
+#modal-tareas::backdrop {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+#modal-tareas .material-symbols-outlined {
+  font-size: 1.2em;
+  vertical-align: middle;
+}
+
+.tareas-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(79, 208, 255, 0.35);
+  background: rgba(79, 208, 255, 0.08);
+}
+
+.tareas-titulo {
+  margin: 0;
+  font-size: 1.1rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.tareas-cerrar {
+  display: grid;
+  place-items: center;
+  padding: 2px 6px;
+  background: transparent;
+  border: 1px solid rgba(79, 208, 255, 0.6);
+  border-radius: 6px;
+  color: #4fd0ff;
+  cursor: pointer;
+}
+
+.tareas-cerrar:hover {
+  background: rgba(79, 208, 255, 0.2);
+}
+
+.tareas-descripcion {
+  margin: 0;
+  padding: 12px 18px 0;
+  color: #9fb4d0;
+  font-size: 0.9rem;
+}
+
+.tareas-lista {
+  list-style: none;
+  margin: 0;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tarea {
+  padding: 10px 12px;
+  border: 1px solid rgba(79, 208, 255, 0.25);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.tarea-fila {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.tarea-nombre {
+  font-weight: 600;
+}
+
+.tarea-estado,
+.tarea-porcentaje {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.85rem;
+  color: #9fb4d0;
+}
+
+.tarea-barra {
+  height: 12px;
+  margin: 8px 0 6px;
+  border: 1px solid rgba(79, 208, 255, 0.25);
+  border-radius: 999px;
+  background: #16233a;
+  overflow: hidden;
+}
+
+.tarea-barra-relleno {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #2a9df4, #4fd0ff);
+  transition: width 0.5s ease;
+}
+
+.tarea-probar {
+  padding: 2px 8px;
+  background: transparent;
+  border: 1px dashed rgba(79, 208, 255, 0.6);
+  border-radius: 6px;
+  color: #4fd0ff;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.tarea-probar:hover {
+  background: rgba(79, 208, 255, 0.2);
+}
+
+/* Tarea completada */
+.tarea.completada {
+  border-color: rgba(76, 175, 80, 0.7);
+  background: rgba(76, 175, 80, 0.1);
+}
+
+.tarea.completada .tarea-estado {
+  color: #6fdc8c;
+  font-weight: 700;
+}
+
+.tarea.completada .tarea-barra-relleno {
+  background: linear-gradient(90deg, #3fae5a, #6fdc8c);
+}
+
+.tareas-pie {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px 14px;
+  border-top: 1px solid rgba(79, 208, 255, 0.35);
+  color: #9fb4d0;
+  font-size: 0.9rem;
+}
+
+.tareas-pie.completa {
+  color: #6fdc8c;
+  font-weight: 700;
+}
+
+.mision-nodo-completada {
+  outline: 2px solid #6fdc8c;
 }

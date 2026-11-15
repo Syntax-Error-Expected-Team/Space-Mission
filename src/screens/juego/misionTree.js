@@ -1,4 +1,5 @@
 import gameState, { MISION_INICIAL } from "../../game-state.js";
+import { abrirTareas } from "../../tareas.js";
 
 const MISIONES = [
   {
@@ -230,11 +231,16 @@ export default function inicializarMisionTree() {
 
     tituloActual.textContent = mision.label;
     descripcionActual.textContent = mision.descripcion;
+const completadas = partida.completados ?? [];
     contenedorNodos
       .querySelectorAll("[data-mision-id]")
       .forEach((boton) => {
         const seleccionada = boton.dataset.misionId === misionActual;
         boton.classList.toggle("mision-nodo-actual", seleccionada);
+        boton.classList.toggle(
+          "mision-nodo-completada",
+          completadas.includes(boton.dataset.misionId),
+        );
         boton.setAttribute("aria-pressed", String(seleccionada));
       });
   }
@@ -256,6 +262,18 @@ export default function inicializarMisionTree() {
     );
     mensaje.textContent = `Misión actual seleccionada: ${mision.label}. La selección no marca la misión como completada.`;
     actualizarMisionActual();
+
+    abrirTareas({
+      misionId: mision.id,
+      titulo: mision.label,
+      descripcion: mision.descripcion,
+      onCambio: (misionCompletada) => {
+        actualizarMisionActual();
+        if (misionCompletada) {
+          mensaje.textContent = `Misión completada: ${mision.label}.`;
+        }
+      },
+    });
   };
 
   actualizarMisionActual();
