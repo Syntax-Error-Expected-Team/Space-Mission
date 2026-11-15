@@ -32,7 +32,7 @@ export default function inicializarSlots({ onSeleccionarSlot, onVolver }) {
 
       // Actualizar texto y estado visual del botón del slot
       if (partida) {
-        estado.textContent = `Día ${partida.dia || 1} - Presupuesto: $${partida.presupuesto ?? 1000}`;
+        estado.textContent = `Mes ${partida.mes || 1} - Presupuesto: $${partida.presupuesto ?? 1000}`;
         btn.disabled = false; // Siempre se puede jugar (continuar) si está ocupado
       } else {
         estado.textContent = "Vacía (Haz clic para crear)";

@@ -3,7 +3,7 @@ body {
   padding: 0;
   background-color: #030712;
   color: #ffffff;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   height: 100vh;
   overflow: hidden;
 }
@@ -69,7 +69,7 @@ body {
     margin-bottom: 2.5rem;
     color: #f3f4f6;
   }
-  
+
   /* Navegación y botones principales */
   #menu-principal {
     display: flex;
@@ -91,20 +91,20 @@ body {
       cursor: pointer;
       transition: all 0.2s ease-in-out;
       backdrop-filter: blur(5px);
-  
+
       &:hover {
         background-color: #2563eb;
         border-color: #3b82f6;
         box-shadow: 0 0 15px rgba(37, 99, 235, 0.5);
         transform: translateY(-2px);
       }
-      
+
       &:active {
         transform: translateY(0);
       }
     }
   }
-  
+
   /* Iconos en la inferior izquierda */
   #esquina-izquierda {
     position: absolute;
@@ -132,7 +132,7 @@ body {
       }
     }
   }
-  
+
   /* Texto en la esquina inferior derecha */
   #esquina-derecha {
     position: absolute;
@@ -224,7 +224,9 @@ body {
           box-shadow: 0 0 15px rgba(37, 99, 235, 0.5);
           transform: translateY(-2px);
 
-          .campana-icon, strong, .campana-estado {
+          .campana-icon,
+          strong,
+          .campana-estado {
             color: #ffffff;
           }
         }
@@ -301,7 +303,7 @@ body {
   background: radial-gradient(circle at center, #111827 0%, #030712 100%);
   color: #ffffff;
   overflow: hidden;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 
   .mision-header {
     display: flex;
@@ -343,7 +345,10 @@ body {
     position: relative;
     flex: 1;
     width: 100%;
-    background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-image: radial-gradient(
+      rgba(255, 255, 255, 0.1) 1px,
+      transparent 1px
+    );
     background-size: 40px 40px;
 
     .mapa-conexiones {
@@ -405,7 +410,8 @@ body {
         white-space: nowrap;
       }
 
-      &.desbloqueado, &.disponible {
+      &.desbloqueado,
+      &.disponible {
         &:hover {
           transform: translate(-50%, -50%) scale(1.1);
           .nodo-icon {
@@ -449,9 +455,30 @@ body {
   height: 100vh;
   overflow: hidden;
   background:
-    radial-gradient(ellipse at 30% 45%, rgba(30, 64, 115, 0.3), transparent 55%),
+    radial-gradient(
+      ellipse at 30% 45%,
+      rgba(30, 64, 115, 0.3),
+      transparent 55%
+    ),
     #030712;
   color: #f3f4f6;
+  transition: grid-template-columns 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &.sidebar-colapsada {
+    grid-template-columns: 24px minmax(0, 1fr) 230px;
+
+    .juego-sidebar {
+      padding-inline: 12px;
+
+      > div {
+        display: none;
+      }
+
+      .btn-toggle-sidebar .material-symbols-outlined {
+        transform: rotate(180deg);
+      }
+    }
+  }
 
   .juego-header {
     grid-column: 1 / -1;
@@ -459,8 +486,8 @@ body {
     align-items: center;
     justify-content: space-between;
     gap: 24px;
-    min-height: 92px;
-    padding: 16px 28px;
+    min-height: 70px;
+    padding: 5px 21px;
     border-bottom: 1px solid rgba(75, 85, 99, 0.45);
     background: rgba(17, 24, 39, 0.9);
   }
@@ -533,7 +560,7 @@ body {
   }
 
   .juego-main {
-    grid-column: 2;
+    grid-column: 2/4;
     grid-row: 2;
     min-width: 0;
     overflow: auto;
@@ -603,6 +630,71 @@ body {
     padding: 28px 18px 20px;
     border-right: 1px solid rgba(75, 85, 99, 0.45);
     background: rgba(17, 24, 39, 0.78);
+    position: relative;
+
+    .btn-sidebar {
+      bottom: 2%;
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px 20px;
+      background-color: rgba(17, 24, 39, 0.8);
+      border: 1px solid rgba(75, 85, 99, 0.4);
+      color: #ffffff;
+      font-size: 1.05rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      backdrop-filter: blur(5px);
+
+      &:hover {
+        background-color: #374151;
+        border-color: #9ca3af;
+        transform: translateY(-2px);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+
+    .btn-toggle-sidebar {
+      position: absolute;
+      top: 50%;
+      right: -14px;
+      transform: translateY(-50%);
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      padding: 0;
+      border: 1px solid rgba(75, 85, 99, 0.65);
+      border-radius: 50%;
+      background: #111827;
+      color: #cbd5e1;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
+      transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+
+      &:hover {
+        background: #1f2937;
+        border-color: #60a5fa;
+        color: #ffffff;
+      }
+
+      .material-symbols-outlined {
+        font-size: 18px;
+        transition: transform 0.25s ease;
+      }
+    }
   }
 
   .juego-nav {
@@ -623,7 +715,9 @@ body {
       font: inherit;
       text-align: left;
       cursor: pointer;
-      transition: background-color 0.2s ease, color 0.2s ease;
+      transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
 
       &:hover,
       &[aria-current="page"] {

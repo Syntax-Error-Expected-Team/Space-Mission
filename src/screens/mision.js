@@ -166,12 +166,7 @@ export default function inicializarMision({ onIniciarMision, onVolver }) {
         accesiblesPorConexiones.has(idNodo) ||
         idNodo === partida.nodoActual;
 
-      if (!puedeAcceder) {
-        alert(
-          "Este nodo estelar aún está bloqueado. Completa una misión conectada para avanzar.",
-        );
-        return;
-      }
+      if (!puedeAcceder) return;
 
       console.log(`Seleccionado nodo de misión: ${idNodo}`);
 

@@ -10,6 +10,7 @@ export default function configurarJuego() {
   const nodoActual = document.getElementById("juego-nodo-actual");
   const turno = document.getElementById("juego-turno");
   const btnPasarTurno = document.getElementById("btn-pasar-turno");
+  const btnToggleSidebar = document.getElementById("btn-toggle-sidebar");
 
   function mostrarVista(vista) {
     paneles.forEach((panel) => {
@@ -39,12 +40,22 @@ export default function configurarJuego() {
 
     nodoIcon.textContent = NODOS.find((n) => n.id === partida.nodoActual)?.icon ?? "public";
     nodoActual.textContent = NODOS.find((n) => n.id === partida.nodoActual)?.label ?? "Tierra";
-    turno.textContent = partida.dia ?? 1;
+    turno.textContent = partida.mes ?? 1;
   }
 
   botonesVista.forEach((boton) => {
     boton.onclick = () => mostrarVista(boton.dataset.juegoVista);
   });
+
+  btnToggleSidebar.onclick = () => {
+    const container = document.querySelector(".juego-container");
+    const colapsada = container.classList.toggle("sidebar-colapsada");
+    btnToggleSidebar.setAttribute("aria-expanded", String(!colapsada));
+    btnToggleSidebar.setAttribute(
+      "aria-label",
+      colapsada ? "Expandir barra lateral" : "Colapsar barra lateral",
+    );
+  };
 
   btnPasarTurno.onclick = () => {
     const partida = gameState.obtenerSlotActual();
@@ -53,7 +64,7 @@ export default function configurarJuego() {
     }
 
     const partidaActualizada = gameState.actualizarSlotActual({
-      dia: (partida.dia ?? 1) + 1,
+      mes: (partida.mes ?? 1) + 1,
     });
     if (!partidaActualizada) {
       throw new Error("No se pudo guardar el avance del turno.");

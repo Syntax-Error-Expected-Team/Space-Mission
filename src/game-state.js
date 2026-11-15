@@ -65,7 +65,7 @@ export class GameStateManager {
     const slotObjeto = {
       idSlot: n,
       creado: Date.now(),
-      dia: 1,
+      mes: 1,
       presupuesto: 1000,
       ciencia: 0,
       nodoActual: "tierra",
