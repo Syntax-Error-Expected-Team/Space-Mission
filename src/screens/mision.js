@@ -1,4 +1,4 @@
-import gameState from "../game-state";
+import gameState, { INGRESO_MENSUAL } from "../game-state";
 
 export const NODOS = [
   {
@@ -104,6 +104,17 @@ export default function inicializarMision({ onIniciarMision, onVolver }) {
 
   const hudPresupuesto = document.getElementById("hud-presupuesto");
   const hudCiencia = document.getElementById("hud-ciencia");
+  const hudIngresoPresupuesto = document.getElementById(
+    "hud-ingreso-presupuesto",
+  );
+  const hudIngresoCiencia = document.getElementById("hud-ingreso-ciencia");
+
+  hudIngresoPresupuesto.textContent = INGRESO_MENSUAL.presupuesto.toLocaleString(
+    "es-AR",
+  );
+  hudIngresoCiencia.textContent = INGRESO_MENSUAL.ciencia.toLocaleString(
+    "es-AR",
+  );
 
   function actualizarHUD() {
     const partida = gameState.obtenerSlotActual();

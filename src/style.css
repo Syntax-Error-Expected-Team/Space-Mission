@@ -330,11 +330,25 @@ body {
       .recurso-item {
         display: flex;
         align-items: center;
-        gap: 6px;
+        gap: 8px;
         color: #38bdf8;
 
         span.material-symbols-outlined {
           font-size: 20px;
+        }
+
+        .recurso-detalles {
+          display: flex;
+          flex-direction: column;
+          gap: 3px;
+          color: #f3f4f6;
+          font-size: 0.9rem;
+        }
+
+        small {
+          color: #9ca3af;
+          font-size: 0.72rem;
+          font-weight: 400;
         }
       }
     }
@@ -546,6 +560,11 @@ body {
       display: flex;
       flex-direction: column;
       gap: 3px;
+    }
+
+    small {
+      color: #9ca3af;
+      font-size: 0.72rem;
     }
 
     span:not(.material-symbols-outlined) {

@@ -3,6 +3,11 @@ const CLAVE_ULTIMO_SLOT = "spaceMission:ultimoSlot";
 const CLAVE_OPCIONES = "spaceMission:opciones";
 const claveSlot = (n) => `spaceMission:partida:${n}`;
 
+export const INGRESO_MENSUAL = {
+  presupuesto: 250,
+  ciencia: 20,
+};
+
 const opcionesPorDefecto = { musica: true, volumen: 50 };
 
 export class GameStateManager {

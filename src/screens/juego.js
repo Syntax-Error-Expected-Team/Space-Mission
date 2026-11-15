@@ -1,4 +1,4 @@
-import gameState from "../game-state.js";
+import gameState, { INGRESO_MENSUAL } from "../game-state.js";
 import { NODOS } from "./mision.js";
 
 export default function configurarJuego() {
@@ -6,6 +6,10 @@ export default function configurarJuego() {
   const botonesVista = document.querySelectorAll("[data-juego-vista]");
   const presupuesto = document.getElementById("juego-presupuesto");
   const ciencia = document.getElementById("juego-ciencia");
+  const ingresoPresupuesto = document.getElementById(
+    "juego-ingreso-presupuesto",
+  );
+  const ingresoCiencia = document.getElementById("juego-ingreso-ciencia");
   const nodoIcon = document.getElementById("nodo-actual-icon");
   const nodoActual = document.getElementById("juego-nodo-actual");
   const turno = document.getElementById("juego-turno");
@@ -37,6 +41,12 @@ export default function configurarJuego() {
       "es-AR",
     );
     ciencia.textContent = Number(partida.ciencia ?? 0).toLocaleString("es-AR");
+    ingresoPresupuesto.textContent = INGRESO_MENSUAL.presupuesto.toLocaleString(
+      "es-AR",
+    );
+    ingresoCiencia.textContent = INGRESO_MENSUAL.ciencia.toLocaleString(
+      "es-AR",
+    );
 
     nodoIcon.textContent = NODOS.find((n) => n.id === partida.nodoActual)?.icon ?? "public";
     nodoActual.textContent = NODOS.find((n) => n.id === partida.nodoActual)?.label ?? "Tierra";
@@ -65,6 +75,8 @@ export default function configurarJuego() {
 
     const partidaActualizada = gameState.actualizarSlotActual({
       mes: (partida.mes ?? 1) + 1,
+      presupuesto: Number(partida.presupuesto ?? 0) + INGRESO_MENSUAL.presupuesto,
+      ciencia: Number(partida.ciencia ?? 0) + INGRESO_MENSUAL.ciencia,
     });
     if (!partidaActualizada) {
       throw new Error("No se pudo guardar el avance del turno.");
