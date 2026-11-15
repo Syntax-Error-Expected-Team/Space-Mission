@@ -1,4 +1,5 @@
 import gameState, { INGRESO_MENSUAL } from "../game-state";
+import { tutorialUnaVez, tutorialVisto } from "../robot.js";
 
 export const NODOS = [
   {
@@ -92,12 +93,46 @@ function renderizarNodos() {
   return contenedorNodos.querySelectorAll(".nodo-estelar");
 }
 
-/**
- * Inicializa la lógica de la pantalla de selección de misiones / nodos estelares.
- * @param {Object} options - Configuración y callbacks.
- * @param {Function} options.onIniciarMision - Callback al seleccionar un nodo válido para jugar (recibe el id del nodo).
- * @param {Function} options.onVolver - Callback al hacer clic en el botón volver.
- */
+let observadorTutorial = null;
+const grupoHUD = (id) => () =>
+  document.getElementById(id)?.parentElement?.parentElement;
+
+function lanzarTutorialCuandoSeVea(contenedor) {
+  observadorTutorial?.disconnect();
+  if (tutorialVisto("mapa-intro")) return;
+
+  observadorTutorial = new IntersectionObserver((entradas) => {
+    if (!entradas.some((e) => e.isIntersecting)) return;
+    observadorTutorial.disconnect();
+
+    setTimeout(() => {
+      tutorialUnaVez("mapa-intro", {
+        pasos: [
+          {
+            texto: "¡Hola! Soy tu robot ayudante. Te explico el mapa.",
+            expresion: "saludo",
+          },
+          {
+            texto: "Esta es tu plata. Con ella comprás mejoras para tus misiones. ¡No la gastes toda junta!",
+            resaltar: grupoHUD("hud-presupuesto"),
+          },
+          {
+            texto: "Esto es la ciencia. Sirve para mejoras especiales.",
+            resaltar: grupoHUD("hud-ciencia"),
+          },
+          {
+            texto: `Cada mes te llegan $${INGRESO_MENSUAL.presupuesto} y ${INGRESO_MENSUAL.ciencia} de ciencia gratis.`,
+            expresion: "pensando",
+          },
+          "Cada círculo del mapa es una misión. Los apagados todavía están bloqueados.",
+          "¡Empecemos! Tocá la Tierra para tu primera misión.",
+        ],
+        objetivo: () => contenedor.querySelector('[data-nodo="tierra"]'),
+      });
+    }, 500);
+  });
+  observadorTutorial.observe(contenedor);
+}
 export default function inicializarMision({ onIniciarMision, onVolver }) {
   const btnVolver = document.getElementById("btn-mision-volver");
   const nodosEstelares = renderizarNodos();
@@ -138,7 +173,6 @@ export default function inicializarMision({ onIniciarMision, onVolver }) {
     nodosEstelares.forEach((nodoEl) => {
       const idNodo = nodoEl.dataset.nodo;
 
-      // Limpiar clases previas de estado
       nodoEl.classList.remove("desbloqueado", "disponible", "bloqueado");
 
       if (idNodo === nodoActual) {
@@ -159,6 +193,7 @@ export default function inicializarMision({ onIniciarMision, onVolver }) {
 
   actualizarHUD();
   actualizarNodosVisuales();
+  lanzarTutorialCuandoSeVea(document.getElementById("mapa-nodos"));
 
   nodosEstelares.forEach((nodoEl) => {
     nodoEl.onclick = () => {
@@ -189,7 +224,6 @@ export default function inicializarMision({ onIniciarMision, onVolver }) {
     };
   });
 
-  // Botón Volver
   if (btnVolver) {
     btnVolver.onclick = () => {
       if (onVolver) onVolver();
